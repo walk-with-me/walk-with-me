@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52432A8519C4554C00F658BA /* WWMMenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 52432A8419C4554C00F658BA /* WWMMenuBar.m */; };
+		5268818319C446F700A0955D /* WWMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5268818219C446F700A0955D /* WWMLoginViewController.m */; };
 		5274179019C3F2FC003D61BF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274178F19C3F2FC003D61BF /* MobileCoreServices.framework */; };
 		5274179219C3FA11003D61BF /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274179119C3FA11003D61BF /* libicucore.dylib */; };
 		5274179419C3FA19003D61BF /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274179319C3FA19003D61BF /* libc++.dylib */; };
@@ -29,7 +31,7 @@
 		65DEEB4419C3D31300FA0D9D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DEEB4319C3D31300FA0D9D /* main.m */; };
 		65DEEB4819C3D31300FA0D9D /* WWMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DEEB4719C3D31300FA0D9D /* WWMAppDelegate.m */; };
 		65DEEB4B19C3D31300FA0D9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65DEEB4919C3D31300FA0D9D /* Main.storyboard */; };
-		65DEEB4E19C3D31300FA0D9D /* WWMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DEEB4D19C3D31300FA0D9D /* WWMViewController.m */; };
+		65DEEB4E19C3D31300FA0D9D /* WWMMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DEEB4D19C3D31300FA0D9D /* WWMMapViewController.m */; };
 		65DEEB5019C3D31300FA0D9D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65DEEB4F19C3D31300FA0D9D /* Images.xcassets */; };
 		65DEEB5719C3D31300FA0D9D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB5619C3D31300FA0D9D /* XCTest.framework */; };
 		65DEEB5819C3D31400FA0D9D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3719C3D31300FA0D9D /* Foundation.framework */; };
@@ -58,6 +60,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52432A8319C4554C00F658BA /* WWMMenuBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMMenuBar.h; sourceTree = "<group>"; };
+		52432A8419C4554C00F658BA /* WWMMenuBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMMenuBar.m; sourceTree = "<group>"; };
+		5268818119C446F700A0955D /* WWMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMLoginViewController.h; sourceTree = "<group>"; };
+		5268818219C446F700A0955D /* WWMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMLoginViewController.m; sourceTree = "<group>"; };
 		5274178F19C3F2FC003D61BF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		5274179119C3FA11003D61BF /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		5274179319C3FA19003D61BF /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -81,8 +87,8 @@
 		65DEEB4619C3D31300FA0D9D /* WWMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWMAppDelegate.h; sourceTree = "<group>"; };
 		65DEEB4719C3D31300FA0D9D /* WWMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWMAppDelegate.m; sourceTree = "<group>"; };
 		65DEEB4A19C3D31300FA0D9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		65DEEB4C19C3D31300FA0D9D /* WWMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWMViewController.h; sourceTree = "<group>"; };
-		65DEEB4D19C3D31300FA0D9D /* WWMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWMViewController.m; sourceTree = "<group>"; };
+		65DEEB4C19C3D31300FA0D9D /* WWMMapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWMMapViewController.h; sourceTree = "<group>"; };
+		65DEEB4D19C3D31300FA0D9D /* WWMMapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWMMapViewController.m; sourceTree = "<group>"; };
 		65DEEB4F19C3D31300FA0D9D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		65DEEB5519C3D31300FA0D9D /* Walk With MeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Walk With MeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65DEEB5619C3D31300FA0D9D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -150,6 +156,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52432A8019C4549100F658BA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				52432A8319C4554C00F658BA /* WWMMenuBar.h */,
+				52432A8419C4554C00F658BA /* WWMMenuBar.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		52432A8119C454A800F658BA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5268818119C446F700A0955D /* WWMLoginViewController.h */,
+				5268818219C446F700A0955D /* WWMLoginViewController.m */,
+				65DEEB4C19C3D31300FA0D9D /* WWMMapViewController.h */,
+				65DEEB4D19C3D31300FA0D9D /* WWMMapViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		52432A8219C454BF00F658BA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				65DEEB4919C3D31300FA0D9D /* Main.storyboard */,
+				65DEEB4F19C3D31300FA0D9D /* Images.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		65DEEB2B19C3D31300FA0D9D = {
 			isa = PBXGroup;
 			children = (
@@ -208,10 +243,9 @@
 				65DEEB6C19C3D56A00FA0D9D /* WalkWithMe.h */,
 				65DEEB4619C3D31300FA0D9D /* WWMAppDelegate.h */,
 				65DEEB4719C3D31300FA0D9D /* WWMAppDelegate.m */,
-				65DEEB4919C3D31300FA0D9D /* Main.storyboard */,
-				65DEEB4C19C3D31300FA0D9D /* WWMViewController.h */,
-				65DEEB4D19C3D31300FA0D9D /* WWMViewController.m */,
-				65DEEB4F19C3D31300FA0D9D /* Images.xcassets */,
+				52432A8119C454A800F658BA /* Controllers */,
+				52432A8019C4549100F658BA /* Views */,
+				52432A8219C454BF00F658BA /* Resources */,
 				65DEEB3E19C3D31300FA0D9D /* Supporting Files */,
 			);
 			path = "Walk With Me";
@@ -352,8 +386,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65DEEB4E19C3D31300FA0D9D /* WWMViewController.m in Sources */,
+				65DEEB4E19C3D31300FA0D9D /* WWMMapViewController.m in Sources */,
 				65DEEB4819C3D31300FA0D9D /* WWMAppDelegate.m in Sources */,
+				5268818319C446F700A0955D /* WWMLoginViewController.m in Sources */,
+				52432A8519C4554C00F658BA /* WWMMenuBar.m in Sources */,
 				65DEEB4419C3D31300FA0D9D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

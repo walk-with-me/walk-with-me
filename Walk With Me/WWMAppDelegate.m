@@ -18,7 +18,6 @@
                   clientKey:@"Vrza5P036lFRXlDY84ic8cKYgisrRQLI8dSKpHZV"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [PFFacebookUtils initializeFacebook];
-    [Parse setApplicationId:@"pq1AsFLAMBK6hFxdy78QmvDQFHJjYcFCVGH7e7lW" clientKey:@"Vrza5P036lFRXlDY84ic8cKYgisrRQLI8dSKpHZV"];
     
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
      UIRemoteNotificationTypeAlert|

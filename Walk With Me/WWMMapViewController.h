@@ -1,5 +1,5 @@
 //
-//  WWMViewController.h
+//  WWMMapViewController.h
 //  Walk With Me
 //
 //  Created by Derek Schultz on 9/12/14.
@@ -8,7 +8,7 @@
 
 #import "WalkWithMe.h"
 
-@interface WWMViewController : UIViewController <MKMapViewDelegate>
+@interface WWMMapViewController : UIViewController <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *safetyMap;
 @property (weak, nonatomic) MKPolyline *routeLine;
 

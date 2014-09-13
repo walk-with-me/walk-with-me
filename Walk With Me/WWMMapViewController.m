@@ -1,14 +1,14 @@
 //
-//  WWMViewController.m
+//  WWMMapViewController.m
 //  Walk With Me
 //
 //  Created by Derek Schultz on 9/12/14.
 //  Copyright (c) 2014 Walk With Me LLC. All rights reserved.
 //
 
-#import "WWMViewController.h"
+#import "WWMMapViewController.h"
 
-@interface WWMViewController ()
+@interface WWMMapViewController ()
 
 @property (strong, nonatomic) Firebase* firebase;
 @property (strong, nonatomic) Firebase* usersbase;
@@ -16,41 +16,16 @@
 
 @end
 
-@implementation WWMViewController
+@implementation WWMMapViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (![PFUser currentUser]) { // No user logged in
+        [self performSegueWithIdentifier:@"LoginPrompt" sender:self];
+    }
     self.safetyMap.delegate = self;
 	// Do any additional setup after loading the view, typically from a nib.
-    NSArray *permissions = [[NSArray alloc] init];
-    [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
-        if (!user) {
-            NSLog(@"Uh oh. The user cancelled the Facebook login.");
-        } else {
-            
-            NSLog(@"User logged in through Facebook!");
-            FBRequest *request = [FBRequest requestForMe];
-            [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                if (!error) {
-                    // result is a dictionary with the user's Facebook data
-                    NSDictionary *userData = (NSDictionary *)result;
-                    
-                    NSString *facebookID = userData[@"id"];
-                    NSString *name = userData[@"name"];
-                    NSString *location = userData[@"location"][@"name"];
-                    NSString *gender = userData[@"gender"];
-                    NSString *birthday = userData[@"birthday"];
-                    NSString *relationship = userData[@"relationship_status"];
-                    
-                    NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
-                    
-                    
-                }
-            }];
-
-        }
-    }];    
     _firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
     _usersbase = [_firebase childByAppendingPath: @"users"];
     _userbase = [_firebase childByAppendingPath: @"10241"];
@@ -146,6 +121,12 @@
         }];
     }
 }
+
+- (IBAction)unwindToMap:(UIStoryboardSegue *)unwindSegue
+{
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
