@@ -15,6 +15,8 @@
 #import <Parse/Parse.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 
+#import "WWMSafetyMapViewController.h"
+
 #define FIREBASE_URL @"https://walk.firebaseio.com/"
 
 #endif

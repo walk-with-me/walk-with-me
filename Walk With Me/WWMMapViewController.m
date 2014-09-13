@@ -10,10 +10,8 @@
 
 @interface WWMMapViewController ()
 
-@property (strong, nonatomic) Firebase* firebase;
-@property (strong, nonatomic) Firebase* usersbase;
-@property (strong, nonatomic) Firebase* userbase;
 @property BOOL walking;
+@property NSMutableArray* faces;
 
 @end
 
@@ -22,7 +20,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self navigationController] setNavigationBarHidden:YES animated:NO];
 
     PFUser* currentUser = [PFUser currentUser];
     if (!currentUser) { // No user logged in
@@ -32,15 +29,15 @@
     [[PFUser currentUser] refresh];
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation addUniqueObject:[[NSString alloc] initWithFormat:@"user_%@", PFUser.currentUser.objectId] forKey:@"channels"];
+    [currentInstallation addUniqueObject:[[NSString alloc] initWithFormat:@"user_%@", PFUser.currentUser[@"fbid"]] forKey:@"channels"];
     [currentInstallation saveInBackground];
     
     self.safetyMap.delegate = self;
 
-    _firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
-    _usersbase = [_firebase childByAppendingPath: @"users"];
+    self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
+    self.usersbase = [self.firebase childByAppendingPath: @"users"];
     NSLog(@"%@", currentUser);
-    _userbase = [_firebase childByAppendingPath: currentUser.objectId];
+    self.userbase = [self.firebase childByAppendingPath: currentUser[@"fbid"]];
 }
 
 - (void)viewDidUnload {
@@ -50,15 +47,8 @@
     [super viewDidUnload];
 }
 
-- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
-    // this dictates the style of the navigation route
-    if ([overlay isKindOfClass:[MKPolyline class]]) {
-        MKPolylineRenderer* aView = [[MKPolylineRenderer alloc] initWithPolyline:(MKPolyline*)overlay];
-        aView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
-        aView.lineWidth = 10;
-        return aView;
-    }
-    return nil;
+- (void)viewDidAppear:(BOOL)animated {
+    [[self navigationController] setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
@@ -67,99 +57,29 @@
     }
 }
 
-- (void)showRouteHome:(MKUserLocation*)userLocation {
-    // set the source to the current location
-    NSLog(@"%f", userLocation.coordinate.latitude);
-    MKPlacemark *source = [[MKPlacemark alloc] initWithCoordinate:userLocation.coordinate
-                                                addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]];
-    
-    Firebase* coords = [_userbase childByAppendingPath: @"coords"];
-    [coords setValue:@[[[NSNumber alloc] initWithDouble:source.coordinate.latitude],
-                       [[NSNumber alloc] initWithDouble:source.coordinate.longitude]]];
-    
-    
-    MKMapItem *srcMapItem = [[MKMapItem alloc] initWithPlacemark:source];
-    [srcMapItem setName:@""];
-    
-    // set the destination to a hardcoded one
-    // TODO change this to the user's home
-    MKPlacemark *destination = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
-                                   [PFUser.currentUser[@"home"][1] doubleValue])
-                                                     addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"", nil]];
-    NSLog(@"%f", destination.coordinate.latitude);
-    MKMapItem *distMapItem = [[MKMapItem alloc] initWithPlacemark:destination];
-    [distMapItem setName:@""];
-    
-    // get the directions
-    MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
-    [request setSource:srcMapItem];
-    [request setDestination:distMapItem];
-    [request setTransportType:MKDirectionsTransportTypeWalking];
-    
-    MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
-    
-    [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-        NSLog(@"response = %@",response);
-        NSArray *arrRoutes = [response routes];
-        [arrRoutes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            
-            MKRoute *route = obj;
-            
-            // alter the map overlay to reflect the new route
-            [_safetyMap removeOverlay:(self.routeLine)];
-            self.routeLine = [route polyline];
-            [_safetyMap addOverlay:self.routeLine];
-            NSLog(@"Route Name : %@",route.name);
-            NSLog(@"Total Distance (in Meters) :%f", route.distance);
-            
-            NSArray *steps = [route steps];
-            
-            [steps enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSLog(@"Route Instruction : %@",[obj instructions]);
-                NSLog(@"Route Distance : %f",[obj distance]);
-            }];
-        }];
-    }];
-}
-
-- (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
-{
-    if (true) {
-        [mapView setUserTrackingMode:MKUserTrackingModeFollow];
-    }
-    else {
-        Firebase* coords = [_userbase childByAppendingPath: @"coords"];
-        MKPointAnnotation *otherUser = [[MKPointAnnotation alloc]init];
-        [otherUser setCoordinate:CLLocationCoordinate2DMake(39.9500, -75.1900)];
-        [otherUser setTitle:@"Other dude"];
-        [mapView addAnnotation:otherUser];
-        [coords observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-            NSLog(@"%@", snapshot.value);
-            if (snapshot.value) {
-                [otherUser setCoordinate:CLLocationCoordinate2DMake([snapshot.value[0] doubleValue],
-                                                                    [snapshot.value[1] doubleValue])];
-            }
-        } withCancelBlock:^(NSError *error) {
-            NSLog(@"%@", error.description);
-        }];
-    }
-}
-
 - (IBAction)startWalk:(id)sender {
     _walking = YES;
-    [self showRouteHome:_safetyMap.userLocation];
+    [self showRouteHome:self.safetyMap.userLocation];
     MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
     [destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
                                                              [PFUser.currentUser[@"home"][1] doubleValue])];
     [destAnnotation setTitle:@"Destination"]; //You can set the subtitle too
-    [_safetyMap addAnnotation:destAnnotation];
+    [self.safetyMap addAnnotation:destAnnotation];
     
-    // SEND EM ALL DEM NOTIFICACIONES
+    // SEND EM ALL DEM NOTIFICACIONES and put at top
     for (NSString* friend in PFUser.currentUser[@"friends"]) {
         PFPush *push = [[PFPush alloc] init];
         [push setChannel:[[NSString alloc] initWithFormat:@"user_%@", friend]];
         [push setMessage:[[NSString alloc] initWithFormat:@"%@ is walking home.", PFUser.currentUser[@"name"]]];
         [push sendPushInBackground];
+        
+        UIImage* face = [[UIImage alloc] init];
+        
+        NSString* faceURL = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?type=large&width=64&height=64", friend];
+        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:faceURL]]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        [self.view addSubview:imageView];
+        [imageView setFrame:CGRectMake(25, 25, 16, 16)];
     }
 }
 
@@ -217,17 +137,15 @@
 
 - (void)facebookViewControllerDoneWasPressed:(id)sender {
     NSLog(@"Pressed done.");
-    NSMutableString *text = [[NSMutableString alloc] init];
     
     // we pick up the users from the selection, and create a string that we use to update the text view
     // at the bottom of the display; note that self.selection is a property inherited from our base class
+    NSMutableArray *newFriendSelection = [[NSMutableArray alloc] init];
     for (id<FBGraphUser> user in self.friendPickerController.selection) {
-        if ([text length]) {
-            [text appendString:@", "];
-        }
-        [text appendString:user.name];
-        NSLog(@"%@", text);
+        [newFriendSelection addObject:user.objectID];
     }
+    PFUser.currentUser[@"friends"] = newFriendSelection;
+    [[PFUser currentUser] saveInBackground];
     [self dismissViewControllerAnimated:YES completion:NULL];
     
 }

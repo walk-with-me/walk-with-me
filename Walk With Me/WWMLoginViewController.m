@@ -38,6 +38,7 @@
                     user[@"firstName"] = userData[@"first_name"];
                     user[@"lastName"] = userData[@"last_name"];
                     user[@"name"] = userData[@"name"];
+                    user[@"fbid"] = userData[@"id"];
                     if (!user[@"home"]) {
                         user[@"home"] = @[[[NSNumber alloc] initWithDouble:0], [[NSNumber alloc] initWithDouble:0]];
                     }
