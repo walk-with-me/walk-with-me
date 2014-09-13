@@ -12,6 +12,12 @@
 		5274179219C3FA11003D61BF /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274179119C3FA11003D61BF /* libicucore.dylib */; };
 		5274179419C3FA19003D61BF /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274179319C3FA19003D61BF /* libc++.dylib */; };
 		5274179619C3FD01003D61BF /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274179519C3FD01003D61BF /* Firebase.framework */; };
+		528E4F2019C4163300D307D5 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528E4F1F19C4163300D307D5 /* Social.framework */; };
+		528E4F2219C4165900D307D5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528E4F2119C4165900D307D5 /* AddressBook.framework */; };
+		528E4F2419C4166000D307D5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528E4F2319C4166000D307D5 /* AVFoundation.framework */; };
+		528E4F2619C4166800D307D5 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528E4F2519C4166800D307D5 /* CoreMedia.framework */; };
+		528E4F2819C4167000D307D5 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528E4F2719C4167000D307D5 /* MediaPlayer.framework */; };
+		528E4F2A19C4167700D307D5 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528E4F2919C4167700D307D5 /* Accounts.framework */; };
 		65DEEB3819C3D31300FA0D9D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3719C3D31300FA0D9D /* Foundation.framework */; };
 		65DEEB3A19C3D31300FA0D9D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3919C3D31300FA0D9D /* CoreGraphics.framework */; };
 		65DEEB3C19C3D31300FA0D9D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3B19C3D31300FA0D9D /* UIKit.framework */; };
@@ -53,6 +59,12 @@
 		5274179119C3FA11003D61BF /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		5274179319C3FA19003D61BF /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		5274179519C3FD01003D61BF /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
+		528E4F1F19C4163300D307D5 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		528E4F2119C4165900D307D5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		528E4F2319C4166000D307D5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		528E4F2519C4166800D307D5 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		528E4F2719C4167000D307D5 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		528E4F2919C4167700D307D5 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		65DEEB3419C3D31300FA0D9D /* Walk With Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Walk With Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65DEEB3719C3D31300FA0D9D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65DEEB3919C3D31300FA0D9D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -88,6 +100,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				528E4F2A19C4167700D307D5 /* Accounts.framework in Frameworks */,
+				528E4F2819C4167000D307D5 /* MediaPlayer.framework in Frameworks */,
+				528E4F2619C4166800D307D5 /* CoreMedia.framework in Frameworks */,
+				528E4F2419C4166000D307D5 /* AVFoundation.framework in Frameworks */,
+				528E4F2219C4165900D307D5 /* AddressBook.framework in Frameworks */,
+				528E4F2019C4163300D307D5 /* Social.framework in Frameworks */,
 				5274179419C3FA19003D61BF /* libc++.dylib in Frameworks */,
 				5274179219C3FA11003D61BF /* libicucore.dylib in Frameworks */,
 				5274179019C3F2FC003D61BF /* MobileCoreServices.framework in Frameworks */,
@@ -143,6 +161,12 @@
 		65DEEB3619C3D31300FA0D9D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				528E4F2919C4167700D307D5 /* Accounts.framework */,
+				528E4F2719C4167000D307D5 /* MediaPlayer.framework */,
+				528E4F2519C4166800D307D5 /* CoreMedia.framework */,
+				528E4F2319C4166000D307D5 /* AVFoundation.framework */,
+				528E4F2119C4165900D307D5 /* AddressBook.framework */,
+				528E4F1F19C4163300D307D5 /* Social.framework */,
 				5274179319C3FA19003D61BF /* libc++.dylib */,
 				5274179119C3FA11003D61BF /* libicucore.dylib */,
 				5274178F19C3F2FC003D61BF /* MobileCoreServices.framework */,
