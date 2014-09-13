@@ -7,6 +7,7 @@
 //
 
 #import "WWMMenuBar.h"
+#import "AwesomeMenu.h"
 
 @implementation WWMMenuBar
 
