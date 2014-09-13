@@ -142,7 +142,6 @@
         id<FBGraphUser> user = (id<FBGraphUser>)[FBGraphObject graphObject];
         user = key;
         if (user) {
-            NSLog(@"adding user: %@", user.name);
             [results addObject:user];
         }
     }
