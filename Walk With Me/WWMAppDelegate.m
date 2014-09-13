@@ -16,6 +16,10 @@
     // Connect to Parse and register for remote notifications
     [Parse setApplicationId:@"pq1AsFLAMBK6hFxdy78QmvDQFHJjYcFCVGH7e7lW"
                   clientKey:@"Vrza5P036lFRXlDY84ic8cKYgisrRQLI8dSKpHZV"];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [PFFacebookUtils initializeFacebook];
+    [Parse setApplicationId:@"pq1AsFLAMBK6hFxdy78QmvDQFHJjYcFCVGH7e7lW" clientKey:@"Vrza5P036lFRXlDY84ic8cKYgisrRQLI8dSKpHZV"];
+    
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
      UIRemoteNotificationTypeAlert|
      UIRemoteNotificationTypeSound];
@@ -44,6 +48,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -63,6 +68,15 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [PFPush handlePush:userInfo];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                        withSession:[PFFacebookUtils session]];
 }
 
 @end

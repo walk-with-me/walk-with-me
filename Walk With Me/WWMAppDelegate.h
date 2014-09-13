@@ -6,8 +6,7 @@
 //  Copyright (c) 2014 Walk With Me LLC. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Parse/Parse.h>
+#import "WalkWithMe.h"
 
 @interface WWMAppDelegate : UIResponder <UIApplicationDelegate>
 

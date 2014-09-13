@@ -11,5 +11,7 @@
 
 #import <MapKit/MapKit.h>
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import <ParseFacebookUtils/PFFacebookUtils.h>
 
 #endif

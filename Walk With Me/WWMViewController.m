@@ -19,7 +19,34 @@
     [super viewDidLoad];
     self.safetyMap.delegate = self;
 	// Do any additional setup after loading the view, typically from a nib.
-    //[self.safetyMap setShowsUserLocation:YES];
+    NSArray *permissions = [[NSArray alloc] init];
+    [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
+        if (!user) {
+            NSLog(@"Uh oh. The user cancelled the Facebook login.");
+        } else {
+            
+            NSLog(@"User logged in through Facebook!");
+            FBRequest *request = [FBRequest requestForMe];
+            [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                if (!error) {
+                    // result is a dictionary with the user's Facebook data
+                    NSDictionary *userData = (NSDictionary *)result;
+                    
+                    NSString *facebookID = userData[@"id"];
+                    NSString *name = userData[@"name"];
+                    NSString *location = userData[@"location"][@"name"];
+                    NSString *gender = userData[@"gender"];
+                    NSString *birthday = userData[@"birthday"];
+                    NSString *relationship = userData[@"relationship_status"];
+                    
+                    NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
+                    
+                    
+                }
+            }];
+
+        }
+    }];
     
 }
 
