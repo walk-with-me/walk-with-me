@@ -17,9 +17,81 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.safetyMap.delegate = self;
 	// Do any additional setup after loading the view, typically from a nib.
+    //[self.safetyMap setShowsUserLocation:YES];
+    
 }
 
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+    // this dictates the style of the navigation route
+    if ([overlay isKindOfClass:[MKPolyline class]]) {
+        MKPolylineRenderer* aView = [[MKPolylineRenderer alloc]initWithPolyline:(MKPolyline*)overlay] ;
+        aView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
+        aView.lineWidth = 10;
+        return aView;
+    }
+    return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation      {
+    
+    // set the source to the current location
+    MKPlacemark *source = [[MKPlacemark alloc]initWithCoordinate:userLocation.coordinate addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"", nil] ];
+    
+    MKMapItem *srcMapItem = [[MKMapItem alloc]initWithPlacemark:source];
+    [srcMapItem setName:@""];
+    
+    // set the destination to a hardcoded one
+    // TODO change this to the user's home
+    MKPlacemark *destination = [[MKPlacemark alloc]initWithCoordinate:CLLocationCoordinate2DMake(37.33072, -122.029674) addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"", nil] ];
+    
+    MKMapItem *distMapItem = [[MKMapItem alloc]initWithPlacemark:destination];
+    [distMapItem setName:@""];
+    
+    // get the directions
+    MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
+    [request setSource:srcMapItem];
+    [request setDestination:distMapItem];
+    [request setTransportType:MKDirectionsTransportTypeWalking];
+    
+    MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
+    
+    [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        
+        NSLog(@"response = %@",response);
+        NSArray *arrRoutes = [response routes];
+        [arrRoutes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            MKRoute *rout = obj;
+            
+            // alter the map overlay to reflect the new route
+            [mapView removeOverlay:(self.routeLine)];
+            self.routeLine = [rout polyline];
+            [mapView addOverlay:self.routeLine];
+            NSLog(@"Rout Name : %@",rout.name);
+            NSLog(@"Total Distance (in Meters) :%f",rout.distance);
+            
+            NSArray *steps = [rout steps];
+            
+            [steps enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSLog(@"Rout Instruction : %@",[obj instructions]);
+                NSLog(@"Rout Distance : %f",[obj distance]);
+            }];
+        }];
+    }];
+
+}
+
+- (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
+{
+    [mapView setUserTrackingMode:MKUserTrackingModeFollow];
+    MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
+    [destAnnotation setCoordinate:CLLocationCoordinate2DMake(39.9500, -75.1900)];
+    [destAnnotation setTitle:@"Destination"]; //You can set the subtitle too
+    [mapView addAnnotation:destAnnotation];
+
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

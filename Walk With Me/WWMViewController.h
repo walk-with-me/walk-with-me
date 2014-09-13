@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 Walk With Me LLC. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WalkWithMe.h"
 
-@interface WWMViewController : UIViewController
-
+@interface WWMViewController : UIViewController <MKMapViewDelegate>
+@property (weak, nonatomic) IBOutlet MKMapView *safetyMap;
+@property (weak, nonatomic) MKPolyline *routeLine;
 @end

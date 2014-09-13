@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65AC9FD119C3D63B004E8124 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB6D19C3D5AC00FA0D9D /* MapKit.framework */; };
 		65DEEB3819C3D31300FA0D9D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3719C3D31300FA0D9D /* Foundation.framework */; };
 		65DEEB3A19C3D31300FA0D9D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3919C3D31300FA0D9D /* CoreGraphics.framework */; };
 		65DEEB3C19C3D31300FA0D9D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3B19C3D31300FA0D9D /* UIKit.framework */; };
@@ -53,6 +54,8 @@
 		65DEEB5E19C3D31400FA0D9D /* Walk With MeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Walk With MeTests-Info.plist"; sourceTree = "<group>"; };
 		65DEEB6019C3D31400FA0D9D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		65DEEB6219C3D31400FA0D9D /* Walk_With_MeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Walk_With_MeTests.m; sourceTree = "<group>"; };
+		65DEEB6C19C3D56A00FA0D9D /* WalkWithMe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalkWithMe.h; sourceTree = "<group>"; };
+		65DEEB6D19C3D5AC00FA0D9D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,7 @@
 			files = (
 				65DEEB3A19C3D31300FA0D9D /* CoreGraphics.framework in Frameworks */,
 				65DEEB3C19C3D31300FA0D9D /* UIKit.framework in Frameworks */,
+				65AC9FD119C3D63B004E8124 /* MapKit.framework in Frameworks */,
 				65DEEB3819C3D31300FA0D9D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +105,7 @@
 		65DEEB3619C3D31300FA0D9D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65DEEB6D19C3D5AC00FA0D9D /* MapKit.framework */,
 				65DEEB3719C3D31300FA0D9D /* Foundation.framework */,
 				65DEEB3919C3D31300FA0D9D /* CoreGraphics.framework */,
 				65DEEB3B19C3D31300FA0D9D /* UIKit.framework */,
@@ -112,6 +117,7 @@
 		65DEEB3D19C3D31300FA0D9D /* Walk With Me */ = {
 			isa = PBXGroup;
 			children = (
+				65DEEB6C19C3D56A00FA0D9D /* WalkWithMe.h */,
 				65DEEB4619C3D31300FA0D9D /* WWMAppDelegate.h */,
 				65DEEB4719C3D31300FA0D9D /* WWMAppDelegate.m */,
 				65DEEB4919C3D31300FA0D9D /* Main.storyboard */,
@@ -200,6 +206,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Walk With Me LLC";
 				TargetAttributes = {
+					65DEEB3319C3D31300FA0D9D = {
+						SystemCapabilities = {
+							com.apple.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					65DEEB5419C3D31300FA0D9D = {
 						TestTargetID = 65DEEB3319C3D31300FA0D9D;
 					};
@@ -377,6 +390,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Walk With Me/Walk With Me-Prefix.pch";
 				INFOPLIST_FILE = "Walk With Me/Walk With Me-Info.plist";
@@ -390,6 +404,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Walk With Me/Walk With Me-Prefix.pch";
 				INFOPLIST_FILE = "Walk With Me/Walk With Me-Info.plist";
@@ -457,6 +472,7 @@
 				65DEEB6819C3D31400FA0D9D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		65DEEB6919C3D31400FA0D9D /* Build configuration list for PBXNativeTarget "Walk With MeTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +481,7 @@
 				65DEEB6B19C3D31400FA0D9D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
