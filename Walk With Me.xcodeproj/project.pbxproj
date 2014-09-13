@@ -40,6 +40,9 @@
 		65DEEB5919C3D31400FA0D9D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3B19C3D31300FA0D9D /* UIKit.framework */; };
 		65DEEB6119C3D31400FA0D9D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65DEEB5F19C3D31400FA0D9D /* InfoPlist.strings */; };
 		65DEEB6319C3D31400FA0D9D /* Walk_With_MeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DEEB6219C3D31400FA0D9D /* Walk_With_MeTests.m */; };
+		9601963619C4C75F00CD6C14 /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963319C4C75F00CD6C14 /* AwesomeMenu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		9601963719C4C75F00CD6C14 /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963519C4C75F00CD6C14 /* AwesomeMenuItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		9601963D19C4D26800CD6C14 /* WWMAwesomeMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963C19C4D26800CD6C14 /* WWMAwesomeMenuViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		96C7982819C3E5E800B975F1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C7982719C3E5E800B975F1 /* AudioToolbox.framework */; };
 		96C7982A19C3E5EE00B975F1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C7982919C3E5EE00B975F1 /* CFNetwork.framework */; };
 		96C7982D19C3E60200B975F1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C7982B19C3E60200B975F1 /* CoreLocation.framework */; };
@@ -103,6 +106,12 @@
 		65DEEB6219C3D31400FA0D9D /* Walk_With_MeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Walk_With_MeTests.m; sourceTree = "<group>"; };
 		65DEEB6C19C3D56A00FA0D9D /* WalkWithMe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalkWithMe.h; sourceTree = "<group>"; };
 		65DEEB6D19C3D5AC00FA0D9D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		9601963219C4C75F00CD6C14 /* AwesomeMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenu.h; sourceTree = "<group>"; };
+		9601963319C4C75F00CD6C14 /* AwesomeMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenu.m; sourceTree = "<group>"; };
+		9601963419C4C75F00CD6C14 /* AwesomeMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenuItem.h; sourceTree = "<group>"; };
+		9601963519C4C75F00CD6C14 /* AwesomeMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenuItem.m; sourceTree = "<group>"; };
+		9601963B19C4D26800CD6C14 /* WWMAwesomeMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMAwesomeMenuViewController.h; sourceTree = "<group>"; };
+		9601963C19C4D26800CD6C14 /* WWMAwesomeMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMAwesomeMenuViewController.m; sourceTree = "<group>"; };
 		96C7982719C3E5E800B975F1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		96C7982919C3E5EE00B975F1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		96C7982B19C3E60200B975F1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -119,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96C7983019C3E61100B975F1 /* QuartzCore.framework in Frameworks */,
 				528E4F2A19C4167700D307D5 /* Accounts.framework in Frameworks */,
 				528E4F2819C4167000D307D5 /* MediaPlayer.framework in Frameworks */,
 				528E4F2619C4166800D307D5 /* CoreMedia.framework in Frameworks */,
@@ -132,7 +142,6 @@
 				96C7983519C3E62200B975F1 /* StoreKit.framework in Frameworks */,
 				96C7983619C3E62200B975F1 /* SystemConfiguration.framework in Frameworks */,
 				65AC9FD619C42544004E8124 /* ParseFacebookUtils.framework in Frameworks */,
-				96C7983019C3E61100B975F1 /* QuartzCore.framework in Frameworks */,
 				96C7982D19C3E60200B975F1 /* CoreLocation.framework in Frameworks */,
 				96C7982E19C3E60200B975F1 /* libz.dylib in Frameworks */,
 				65DEEB3A19C3D31300FA0D9D /* CoreGraphics.framework in Frameworks */,
@@ -176,6 +185,8 @@
 			children = (
 				52931B2119C4CE090096D161 /* WWMSafetyMapViewController.h */,
 				52931B2219C4CE090096D161 /* WWMSafetyMapViewController.m */,
+				9601963B19C4D26800CD6C14 /* WWMAwesomeMenuViewController.h */,
+				9601963C19C4D26800CD6C14 /* WWMAwesomeMenuViewController.m */,
 				65DEEB4C19C3D31300FA0D9D /* WWMMapViewController.h */,
 				65DEEB4D19C3D31300FA0D9D /* WWMMapViewController.m */,
 				52931B1E19C4CD140096D161 /* WWMCaretakerViewController.h */,
@@ -207,6 +218,7 @@
 		65DEEB2B19C3D31300FA0D9D = {
 			isa = PBXGroup;
 			children = (
+				9601963119C4C75F00CD6C14 /* AwesomeMenu */,
 				65DEEB3D19C3D31300FA0D9D /* Walk With Me */,
 				65DEEB5C19C3D31400FA0D9D /* Walk With MeTests */,
 				65DEEB3619C3D31300FA0D9D /* Frameworks */,
@@ -296,6 +308,17 @@
 				65DEEB5F19C3D31400FA0D9D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9601963119C4C75F00CD6C14 /* AwesomeMenu */ = {
+			isa = PBXGroup;
+			children = (
+				9601963219C4C75F00CD6C14 /* AwesomeMenu.h */,
+				9601963319C4C75F00CD6C14 /* AwesomeMenu.m */,
+				9601963419C4C75F00CD6C14 /* AwesomeMenuItem.h */,
+				9601963519C4C75F00CD6C14 /* AwesomeMenuItem.m */,
+			);
+			path = AwesomeMenu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,6 +432,8 @@
 				52931B2019C4CD140096D161 /* WWMCaretakerViewController.m in Sources */,
 				65DEEB4819C3D31300FA0D9D /* WWMAppDelegate.m in Sources */,
 				5268818319C446F700A0955D /* WWMLoginViewController.m in Sources */,
+				9601963719C4C75F00CD6C14 /* AwesomeMenuItem.m in Sources */,
+				9601963619C4C75F00CD6C14 /* AwesomeMenu.m in Sources */,
 				52432A8519C4554C00F658BA /* WWMMenuBar.m in Sources */,
 				65DEEB4419C3D31300FA0D9D /* main.m in Sources */,
 			);
