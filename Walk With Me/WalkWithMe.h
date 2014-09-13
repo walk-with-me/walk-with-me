@@ -9,9 +9,12 @@
 #ifndef Walk_With_Me_WalkWithMe_h
 #define Walk_With_Me_WalkWithMe_h
 
+#import <Firebase/Firebase.h>
 #import <MapKit/MapKit.h>
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
+
+#define FIREBASE_URL @"https://walk.firebaseio.com/"
 
 #endif
