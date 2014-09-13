@@ -42,7 +42,7 @@
 		65DEEB6319C3D31400FA0D9D /* Walk_With_MeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DEEB6219C3D31400FA0D9D /* Walk_With_MeTests.m */; };
 		9601963619C4C75F00CD6C14 /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963319C4C75F00CD6C14 /* AwesomeMenu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9601963719C4C75F00CD6C14 /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963519C4C75F00CD6C14 /* AwesomeMenuItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		9601963D19C4D26800CD6C14 /* WWMAwesomeMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963C19C4D26800CD6C14 /* WWMAwesomeMenuViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		9635E64819C4EDC10049BFF7 /* WWMUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9635E64719C4EDC10049BFF7 /* WWMUIButton.m */; };
 		96C7982819C3E5E800B975F1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C7982719C3E5E800B975F1 /* AudioToolbox.framework */; };
 		96C7982A19C3E5EE00B975F1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C7982919C3E5EE00B975F1 /* CFNetwork.framework */; };
 		96C7982D19C3E60200B975F1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C7982B19C3E60200B975F1 /* CoreLocation.framework */; };
@@ -112,6 +112,8 @@
 		9601963519C4C75F00CD6C14 /* AwesomeMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenuItem.m; sourceTree = "<group>"; };
 		9601963B19C4D26800CD6C14 /* WWMAwesomeMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMAwesomeMenuViewController.h; sourceTree = "<group>"; };
 		9601963C19C4D26800CD6C14 /* WWMAwesomeMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMAwesomeMenuViewController.m; sourceTree = "<group>"; };
+		9635E64619C4EDC10049BFF7 /* WWMUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMUIButton.h; sourceTree = "<group>"; };
+		9635E64719C4EDC10049BFF7 /* WWMUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMUIButton.m; sourceTree = "<group>"; };
 		96C7982719C3E5E800B975F1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		96C7982919C3E5EE00B975F1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		96C7982B19C3E60200B975F1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -176,6 +178,8 @@
 			children = (
 				52432A8319C4554C00F658BA /* WWMMenuBar.h */,
 				52432A8419C4554C00F658BA /* WWMMenuBar.m */,
+				9635E64619C4EDC10049BFF7 /* WWMUIButton.h */,
+				9635E64719C4EDC10049BFF7 /* WWMUIButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -434,6 +438,7 @@
 				5268818319C446F700A0955D /* WWMLoginViewController.m in Sources */,
 				9601963719C4C75F00CD6C14 /* AwesomeMenuItem.m in Sources */,
 				9601963619C4C75F00CD6C14 /* AwesomeMenu.m in Sources */,
+				9635E64819C4EDC10049BFF7 /* WWMUIButton.m in Sources */,
 				52432A8519C4554C00F658BA /* WWMMenuBar.m in Sources */,
 				65DEEB4419C3D31300FA0D9D /* main.m in Sources */,
 			);

@@ -67,6 +67,7 @@
     [self.safetyMap addAnnotation:destAnnotation];
     
     // SEND EM ALL DEM NOTIFICACIONES and put at top
+    uint i = 0;
     for (NSString* friend in PFUser.currentUser[@"friends"]) {
         PFPush *push = [[PFPush alloc] init];
         [push setChannel:[[NSString alloc] initWithFormat:@"user_%@", friend]];
@@ -75,11 +76,16 @@
         
         UIImage* face = [[UIImage alloc] init];
         
-        NSString* faceURL = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?type=large&width=64&height=64", friend];
+        NSString* faceURL = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=square&width=100&height=100", friend];
         UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:faceURL]]];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.layer.cornerRadius = 25;
+        imageView.layer.masksToBounds = YES;
+        imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        imageView.layer.borderWidth = 2.0;
         [self.view addSubview:imageView];
-        [imageView setFrame:CGRectMake(25, 25, 16, 16)];
+        [imageView setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
+        i++;
     }
 }
 
@@ -131,7 +137,16 @@
     
     [self.friendPickerController loadData];
     [self.friendPickerController clearSelection];
-    
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    for (id<FBGraphUser> key in PFUser.currentUser[@"friend_profiles"]) {
+        id<FBGraphUser> user = (id<FBGraphUser>)[FBGraphObject graphObject];
+        user = key;
+        if (user) {
+            [results addObject:user];
+        }
+    }
+    // And finally set the selection property
+    self.friendPickerController.selection = results;
     [self presentViewController:self.friendPickerController animated:YES completion:nil];
 }
 
@@ -141,10 +156,13 @@
     // we pick up the users from the selection, and create a string that we use to update the text view
     // at the bottom of the display; note that self.selection is a property inherited from our base class
     NSMutableArray *newFriendSelection = [[NSMutableArray alloc] init];
+    NSMutableArray *newFriendFBGraphData = [[NSMutableArray alloc] init];
     for (id<FBGraphUser> user in self.friendPickerController.selection) {
         [newFriendSelection addObject:user.objectID];
+        [newFriendFBGraphData addObject:user];
     }
     PFUser.currentUser[@"friends"] = newFriendSelection;
+    PFUser.currentUser[@"friend_profiles"] = newFriendFBGraphData;
     [[PFUser currentUser] saveInBackground];
     [self dismissViewControllerAnimated:YES completion:NULL];
     
