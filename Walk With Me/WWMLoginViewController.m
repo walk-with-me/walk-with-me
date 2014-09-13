@@ -34,16 +34,16 @@
             [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                 if (!error) {
                     // result is a dictionary with the user's Facebook data
-                    //  NSDictionary *userData = (NSDictionary *)result;
+                    NSDictionary *userData = (NSDictionary *)result;
+                    user[@"firstName"] = userData[@"first_name"];
+                    user[@"lastName"] = userData[@"last_name"];
+                    user[@"name"] = userData[@"name"];
                     if (!user[@"home"]) {
                         user[@"home"] = @[[[NSNumber alloc] initWithDouble:0], [[NSNumber alloc] initWithDouble:0]];
-                        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                            [self performSegueWithIdentifier:@"LoginSuccess" sender:self];
-                        }];
                     }
-                    else {
+                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         [self performSegueWithIdentifier:@"LoginSuccess" sender:self];
-                    }
+                    }];
                 }
             }];
 

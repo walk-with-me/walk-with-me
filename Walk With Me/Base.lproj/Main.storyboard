@@ -50,6 +50,9 @@
                                         <state key="normal" title="👟 Walk">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="startWalk:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="KoE-yg-Yfk"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -159,6 +162,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9K-4x-l4X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3432" y="-562"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="qaa-a5-dt7">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="fEj-GT-9nu" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aEr-2H-aCZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="fil-xV-oI7"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="aIN-WT-QGf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kHT-yW-LDW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
