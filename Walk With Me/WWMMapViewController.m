@@ -67,6 +67,7 @@
     [self.safetyMap addAnnotation:destAnnotation];
     
     // SEND EM ALL DEM NOTIFICACIONES and put at top
+    uint i = 0;
     for (NSString* friend in PFUser.currentUser[@"friends"]) {
         PFPush *push = [[PFPush alloc] init];
         [push setChannel:[[NSString alloc] initWithFormat:@"user_%@", friend]];
@@ -75,11 +76,16 @@
         
         UIImage* face = [[UIImage alloc] init];
         
-        NSString* faceURL = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?type=large&width=64&height=64", friend];
+        NSString* faceURL = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=square&width=100&height=100", friend];
         UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:faceURL]]];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.layer.cornerRadius = 25;
+        imageView.layer.masksToBounds = YES;
+        imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        imageView.layer.borderWidth = 2.0;
         [self.view addSubview:imageView];
-        [imageView setFrame:CGRectMake(25, 25, 16, 16)];
+        [imageView setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
+        i++;
     }
 }
 
