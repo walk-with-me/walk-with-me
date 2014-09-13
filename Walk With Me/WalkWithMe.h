@@ -14,6 +14,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
+#import <QuartzCore/QuartzCore.h>
 
 #import "WWMSafetyMapViewController.h"
 
