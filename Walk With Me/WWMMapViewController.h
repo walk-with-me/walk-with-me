@@ -13,4 +13,9 @@
 @property (weak, nonatomic) IBOutlet MKMapView *safetyMap;
 @property (weak, nonatomic) MKPolyline *routeLine;
 
+@property (strong, nonatomic) IBOutlet UITextView *selectedFriendsView;
+@property (retain, nonatomic) FBFriendPickerViewController *friendPickerController;
+
+- (IBAction)FriendPickerButtonClicked:(id)sender;
+
 @end

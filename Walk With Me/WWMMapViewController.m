@@ -43,6 +43,13 @@
     _userbase = [_firebase childByAppendingPath: currentUser.objectId];
 }
 
+- (void)viewDidUnload {
+    self.selectedFriendsView = nil;
+    self.friendPickerController = nil;
+    
+    [super viewDidUnload];
+}
+
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     // this dictates the style of the navigation route
     if ([overlay isKindOfClass:[MKPolyline class]]) {
@@ -160,11 +167,79 @@
 {
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)FriendPickerButtonClicked:(id)sender {
+    
+    // if the session is open, then load the data for our view controller
+    if (!FBSession.activeSession.isOpen) {
+        // if the session is closed, then we open it here, and establish a handler for state changes
+        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"user_friends"]
+                                           allowLoginUI:YES
+                                      completionHandler:^(FBSession *session,
+                                                          FBSessionState state,
+                                                          NSError *error) {
+                                          if (error) {
+                                              UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                                  message:error.localizedDescription
+                                                                                                 delegate:nil
+                                                                                        cancelButtonTitle:@"OK"
+                                                                                        otherButtonTitles:nil];
+                                              [alertView show];
+                                          } else if (session.isOpen) {
+                                              [self FriendPickerButtonClicked:sender];
+                                          }
+                                      }];
+        return;
+    }
+    
+    if (self.friendPickerController == nil) {
+        // Create friend picker, and get data loaded into it.
+        self.friendPickerController = [[FBFriendPickerViewController alloc] init];
+        self.friendPickerController.title = @"My Pals";
+        self.friendPickerController.delegate = self;
+        self.friendPickerController.allowsMultipleSelection = YES;
+        self.friendPickerController.cancelButton = nil;
+        // apparently even if we don't add the constraint that we only show friends with the app,
+        // it is still restricted
+        //self.friendPickerController.fieldsForRequest = [NSSet setWithObject:@"installed"];
+    }
+    
+    [self.friendPickerController loadData];
+    [self.friendPickerController clearSelection];
+    
+    [self presentViewController:self.friendPickerController animated:YES completion:nil];
+}
+
+- (void)facebookViewControllerDoneWasPressed:(id)sender {
+    NSLog(@"Pressed done.");
+    NSMutableString *text = [[NSMutableString alloc] init];
+    
+    // we pick up the users from the selection, and create a string that we use to update the text view
+    // at the bottom of the display; note that self.selection is a property inherited from our base class
+    for (id<FBGraphUser> user in self.friendPickerController.selection) {
+        if ([text length]) {
+            [text appendString:@", "];
+        }
+        [text appendString:user.name];
+        NSLog(@"%@", text);
+    }
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+- (void)facebookViewControllerCancelWasPressed:(id)sender {
+    NSLog(@"Pressed cancel.");
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+{
+    return YES;
 }
 
 @end
