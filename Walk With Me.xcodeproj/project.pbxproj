@@ -24,6 +24,7 @@
 		65AC9FD719C42544004E8124 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65AC9FD519C42544004E8124 /* ParseFacebookUtils.framework */; };
 		65AC9FD919C42655004E8124 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65AC9FD819C42655004E8124 /* FacebookSDK.framework */; };
 		65AC9FDA19C42655004E8124 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65AC9FD819C42655004E8124 /* FacebookSDK.framework */; };
+		65AC9FDD19C45FCD004E8124 /* WWMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65AC9FDC19C45FCD004E8124 /* WWMSettingsViewController.m */; };
 		65DEEB3819C3D31300FA0D9D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3719C3D31300FA0D9D /* Foundation.framework */; };
 		65DEEB3A19C3D31300FA0D9D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3919C3D31300FA0D9D /* CoreGraphics.framework */; };
 		65DEEB3C19C3D31300FA0D9D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3B19C3D31300FA0D9D /* UIKit.framework */; };
@@ -76,6 +77,8 @@
 		528E4F2919C4167700D307D5 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		65AC9FD519C42544004E8124 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		65AC9FD819C42655004E8124 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		65AC9FDB19C45FCD004E8124 /* WWMSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMSettingsViewController.h; sourceTree = "<group>"; };
+		65AC9FDC19C45FCD004E8124 /* WWMSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMSettingsViewController.m; sourceTree = "<group>"; };
 		65DEEB3419C3D31300FA0D9D /* Walk With Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Walk With Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65DEEB3719C3D31300FA0D9D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65DEEB3919C3D31300FA0D9D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -168,6 +171,8 @@
 		52432A8119C454A800F658BA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				65AC9FDB19C45FCD004E8124 /* WWMSettingsViewController.h */,
+				65AC9FDC19C45FCD004E8124 /* WWMSettingsViewController.m */,
 				5268818119C446F700A0955D /* WWMLoginViewController.h */,
 				5268818219C446F700A0955D /* WWMLoginViewController.m */,
 				65DEEB4C19C3D31300FA0D9D /* WWMMapViewController.h */,
@@ -387,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65DEEB4E19C3D31300FA0D9D /* WWMMapViewController.m in Sources */,
+				65AC9FDD19C45FCD004E8124 /* WWMSettingsViewController.m in Sources */,
 				65DEEB4819C3D31300FA0D9D /* WWMAppDelegate.m in Sources */,
 				5268818319C446F700A0955D /* WWMLoginViewController.m in Sources */,
 				52432A8519C4554C00F658BA /* WWMMenuBar.m in Sources */,

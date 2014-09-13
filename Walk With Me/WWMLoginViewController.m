@@ -23,7 +23,7 @@
     return self;
 }
 - (IBAction)login:(id)sender {
-    NSArray *permissions = [[NSArray alloc] init];
+    NSArray *permissions = [[NSArray alloc] initWithObjects:@"user_friends", nil];
     [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
         if (!user) {
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
@@ -36,15 +36,15 @@
                     // result is a dictionary with the user's Facebook data
                     NSDictionary *userData = (NSDictionary *)result;
 
-                    NSString *facebookID = userData[@"id"];
-                    NSString *name = userData[@"name"];
-                    NSString *location = userData[@"location"][@"name"];
-                    NSString *gender = userData[@"gender"];
-                    NSString *birthday = userData[@"birthday"];
-                    NSString *relationship = userData[@"relationship_status"];
-
-                    NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
-                    
+//                    NSString *facebookID = userData[@"id"];
+//                    NSString *name = userData[@"name"];
+//                    NSString *location = userData[@"location"][@"name"];
+//                    NSString *gender = userData[@"gender"];
+//                    NSString *birthday = userData[@"birthday"];
+//                    NSString *relationship = userData[@"relationship_status"];
+//
+//                    NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
+//                    
                     [self performSegueWithIdentifier:@"LoginSuccess" sender:self];
 
 
