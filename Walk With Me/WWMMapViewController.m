@@ -131,7 +131,17 @@
     
     [self.friendPickerController loadData];
     [self.friendPickerController clearSelection];
-    
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    for (id<FBGraphUser> key in PFUser.currentUser[@"friend_profiles"]) {
+        id<FBGraphUser> user = (id<FBGraphUser>)[FBGraphObject graphObject];
+        user = key;
+        if (user) {
+            NSLog(@"adding user: %@", user.name);
+            [results addObject:user];
+        }
+    }
+    // And finally set the selection property
+    self.friendPickerController.selection = results;
     [self presentViewController:self.friendPickerController animated:YES completion:nil];
 }
 
@@ -141,10 +151,13 @@
     // we pick up the users from the selection, and create a string that we use to update the text view
     // at the bottom of the display; note that self.selection is a property inherited from our base class
     NSMutableArray *newFriendSelection = [[NSMutableArray alloc] init];
+    NSMutableArray *newFriendFBGraphData = [[NSMutableArray alloc] init];
     for (id<FBGraphUser> user in self.friendPickerController.selection) {
         [newFriendSelection addObject:user.objectID];
+        [newFriendFBGraphData addObject:user];
     }
     PFUser.currentUser[@"friends"] = newFriendSelection;
+    PFUser.currentUser[@"friend_profiles"] = newFriendFBGraphData;
     [[PFUser currentUser] saveInBackground];
     [self dismissViewControllerAnimated:YES completion:NULL];
     
