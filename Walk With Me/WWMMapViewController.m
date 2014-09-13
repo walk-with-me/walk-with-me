@@ -29,6 +29,11 @@
         [self performSegueWithIdentifier:@"LoginPrompt" sender:self];
         return;
     }
+    [[PFUser currentUser] refresh];
+    
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation addUniqueObject:[[NSString alloc] initWithFormat:@"user_%@", PFUser.currentUser.objectId] forKey:@"channels"];
+    [currentInstallation saveInBackground];
     
     self.safetyMap.delegate = self;
 
@@ -50,7 +55,14 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    if (_walking) {
+        [self showRouteHome:userLocation];
+    }
+}
+
+- (void)showRouteHome:(MKUserLocation*)userLocation {
     // set the source to the current location
+    NSLog(@"%f", userLocation.coordinate.latitude);
     MKPlacemark *source = [[MKPlacemark alloc] initWithCoordinate:userLocation.coordinate
                                                 addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]];
     
@@ -64,9 +76,10 @@
     
     // set the destination to a hardcoded one
     // TODO change this to the user's home
-    MKPlacemark *destination = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.33072, -122.029674)
+    MKPlacemark *destination = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
+                                   [PFUser.currentUser[@"home"][1] doubleValue])
                                                      addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"", nil]];
-    
+    NSLog(@"%f", destination.coordinate.latitude);
     MKMapItem *distMapItem = [[MKMapItem alloc] initWithPlacemark:destination];
     [distMapItem setName:@""];
     
@@ -86,9 +99,9 @@
             MKRoute *route = obj;
             
             // alter the map overlay to reflect the new route
-            [mapView removeOverlay:(self.routeLine)];
+            [_safetyMap removeOverlay:(self.routeLine)];
             self.routeLine = [route polyline];
-            [mapView addOverlay:self.routeLine];
+            [_safetyMap addOverlay:self.routeLine];
             NSLog(@"Route Name : %@",route.name);
             NSLog(@"Total Distance (in Meters) :%f", route.distance);
             
@@ -100,18 +113,12 @@
             }];
         }];
     }];
-
 }
 
 - (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
 {
     if (true) {
         [mapView setUserTrackingMode:MKUserTrackingModeFollow];
-        MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
-        [destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
-                                                                 [PFUser.currentUser[@"home"][1] doubleValue])];
-        [destAnnotation setTitle:@"Destination"]; //You can set the subtitle too
-        [mapView addAnnotation:destAnnotation];
     }
     else {
         Firebase* coords = [_userbase childByAppendingPath: @"coords"];
@@ -128,6 +135,24 @@
         } withCancelBlock:^(NSError *error) {
             NSLog(@"%@", error.description);
         }];
+    }
+}
+
+- (IBAction)startWalk:(id)sender {
+    _walking = YES;
+    [self showRouteHome:_safetyMap.userLocation];
+    MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
+    [destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
+                                                             [PFUser.currentUser[@"home"][1] doubleValue])];
+    [destAnnotation setTitle:@"Destination"]; //You can set the subtitle too
+    [_safetyMap addAnnotation:destAnnotation];
+    
+    // SEND EM ALL DEM NOTIFICACIONES
+    for (NSString* friend in PFUser.currentUser[@"friends"]) {
+        PFPush *push = [[PFPush alloc] init];
+        [push setChannel:[[NSString alloc] initWithFormat:@"user_%@", friend]];
+        [push setMessage:[[NSString alloc] initWithFormat:@"%@ is walking home.", PFUser.currentUser[@"name"]]];
+        [push sendPushInBackground];
     }
 }
 
