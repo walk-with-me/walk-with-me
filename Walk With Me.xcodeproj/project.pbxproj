@@ -171,12 +171,12 @@
 		52432A8119C454A800F658BA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				65AC9FDB19C45FCD004E8124 /* WWMSettingsViewController.h */,
-				65AC9FDC19C45FCD004E8124 /* WWMSettingsViewController.m */,
-				5268818119C446F700A0955D /* WWMLoginViewController.h */,
-				5268818219C446F700A0955D /* WWMLoginViewController.m */,
 				65DEEB4C19C3D31300FA0D9D /* WWMMapViewController.h */,
 				65DEEB4D19C3D31300FA0D9D /* WWMMapViewController.m */,
+				5268818119C446F700A0955D /* WWMLoginViewController.h */,
+				5268818219C446F700A0955D /* WWMLoginViewController.m */,
+				65AC9FDB19C45FCD004E8124 /* WWMSettingsViewController.h */,
+				65AC9FDC19C45FCD004E8124 /* WWMSettingsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

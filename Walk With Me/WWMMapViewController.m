@@ -13,6 +13,7 @@
 @property (strong, nonatomic) Firebase* firebase;
 @property (strong, nonatomic) Firebase* usersbase;
 @property (strong, nonatomic) Firebase* userbase;
+@property BOOL walking;
 
 @end
 
@@ -21,20 +22,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (![PFUser currentUser]) { // No user logged in
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
+
+    PFUser* currentUser = [PFUser currentUser];
+    if (!currentUser) { // No user logged in
         [self performSegueWithIdentifier:@"LoginPrompt" sender:self];
+        return;
     }
+    
     self.safetyMap.delegate = self;
-	// Do any additional setup after loading the view, typically from a nib.
+
     _firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
     _usersbase = [_firebase childByAppendingPath: @"users"];
-    _userbase = [_firebase childByAppendingPath: @"10241"];
+    NSLog(@"%@", currentUser);
+    _userbase = [_firebase childByAppendingPath: currentUser.objectId];
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     // this dictates the style of the navigation route
     if ([overlay isKindOfClass:[MKPolyline class]]) {
-        MKPolylineRenderer* aView = [[MKPolylineRenderer alloc]initWithPolyline:(MKPolyline*)overlay] ;
+        MKPolylineRenderer* aView = [[MKPolylineRenderer alloc] initWithPolyline:(MKPolyline*)overlay];
         aView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
         aView.lineWidth = 10;
         return aView;
@@ -44,21 +51,23 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     // set the source to the current location
-    MKPlacemark *source = [[MKPlacemark alloc]initWithCoordinate:userLocation.coordinate addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil] ];
+    MKPlacemark *source = [[MKPlacemark alloc] initWithCoordinate:userLocation.coordinate
+                                                addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]];
     
     Firebase* coords = [_userbase childByAppendingPath: @"coords"];
     [coords setValue:@[[[NSNumber alloc] initWithDouble:source.coordinate.latitude],
                        [[NSNumber alloc] initWithDouble:source.coordinate.longitude]]];
     
     
-    MKMapItem *srcMapItem = [[MKMapItem alloc]initWithPlacemark:source];
+    MKMapItem *srcMapItem = [[MKMapItem alloc] initWithPlacemark:source];
     [srcMapItem setName:@""];
     
     // set the destination to a hardcoded one
     // TODO change this to the user's home
-    MKPlacemark *destination = [[MKPlacemark alloc]initWithCoordinate:CLLocationCoordinate2DMake(37.33072, -122.029674) addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"", nil] ];
+    MKPlacemark *destination = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.33072, -122.029674)
+                                                     addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"", nil]];
     
-    MKMapItem *distMapItem = [[MKMapItem alloc]initWithPlacemark:destination];
+    MKMapItem *distMapItem = [[MKMapItem alloc] initWithPlacemark:destination];
     [distMapItem setName:@""];
     
     // get the directions
@@ -70,25 +79,24 @@
     MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
     
     [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-        
         NSLog(@"response = %@",response);
         NSArray *arrRoutes = [response routes];
         [arrRoutes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             
-            MKRoute *rout = obj;
+            MKRoute *route = obj;
             
             // alter the map overlay to reflect the new route
             [mapView removeOverlay:(self.routeLine)];
-            self.routeLine = [rout polyline];
+            self.routeLine = [route polyline];
             [mapView addOverlay:self.routeLine];
-            NSLog(@"Rout Name : %@",rout.name);
-            NSLog(@"Total Distance (in Meters) :%f",rout.distance);
+            NSLog(@"Route Name : %@",route.name);
+            NSLog(@"Total Distance (in Meters) :%f", route.distance);
             
-            NSArray *steps = [rout steps];
+            NSArray *steps = [route steps];
             
             [steps enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSLog(@"Rout Instruction : %@",[obj instructions]);
-                NSLog(@"Rout Distance : %f",[obj distance]);
+                NSLog(@"Route Instruction : %@",[obj instructions]);
+                NSLog(@"Route Distance : %f",[obj distance]);
             }];
         }];
     }];
@@ -97,10 +105,11 @@
 
 - (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
 {
-    if (false) {
+    if (true) {
         [mapView setUserTrackingMode:MKUserTrackingModeFollow];
         MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
-        [destAnnotation setCoordinate:CLLocationCoordinate2DMake(39.9500, -75.1900)];
+        [destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
+                                                                 [PFUser.currentUser[@"home"][1] doubleValue])];
         [destAnnotation setTitle:@"Destination"]; //You can set the subtitle too
         [mapView addAnnotation:destAnnotation];
     }

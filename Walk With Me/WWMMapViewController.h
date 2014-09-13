@@ -9,6 +9,7 @@
 #import "WalkWithMe.h"
 
 @interface WWMMapViewController : UIViewController <MKMapViewDelegate>
+
 @property (weak, nonatomic) IBOutlet MKMapView *safetyMap;
 @property (weak, nonatomic) MKPolyline *routeLine;
 

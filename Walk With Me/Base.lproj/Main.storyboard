@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="IIe-WS-vic">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="IIe-WS-vic">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller - 🏃 Walk With Me™-->
+        <!--Map View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="WWMMapViewController" sceneMemberID="viewController">
@@ -63,7 +63,7 @@
                             <constraint firstItem="vgf-xA-pzf" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="vsr-xZ-Mrb"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="🏃 Walk With Me™" id="CIK-5a-Amj"/>
+                    <navigationItem key="navigationItem" id="CIK-5a-Amj"/>
                     <connections>
                         <outlet property="safetyMap" destination="vgf-xA-pzf" id="kEm-nr-fUo"/>
                         <segue destination="QVu-MM-hjb" kind="modal" identifier="LoginPrompt" animates="NO" id="HdX-c5-sag"/>
@@ -104,7 +104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R31-kT-veX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2498" y="-269"/>
+            <point key="canvasLocation" x="-2210" y="505"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="0lR-Gb-afw">
@@ -139,7 +139,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gSq-Yb-aQI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="RYk-tt-6As" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-2302" y="-1023"/>
+            <point key="canvasLocation" x="-2274" y="-933"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CSW-f2-c6k">
