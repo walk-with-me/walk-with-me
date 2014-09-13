@@ -23,6 +23,12 @@
      UIRemoteNotificationTypeAlert|
      UIRemoteNotificationTypeSound];
     
+    // Set global style options
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UINavigationBar appearance] setTintColor:WWM_BLACKISH];
+    [[UINavigationBar appearance] setBarTintColor:WWM_DARK];
+    [[UITabBar appearance] setSelectedImageTintColor:WWM_BLUE];
+    
     // Override point for customization after application launch.
     return YES;
 }
