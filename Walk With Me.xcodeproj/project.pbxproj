@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5274178E19C3F2BD003D61BF /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274178D19C3F2BD003D61BF /* Bolts.framework */; };
+		5274179019C3F2FC003D61BF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274178F19C3F2FC003D61BF /* MobileCoreServices.framework */; };
+		5274179219C3FA11003D61BF /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274179119C3FA11003D61BF /* libicucore.dylib */; };
+		5274179419C3FA19003D61BF /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274179319C3FA19003D61BF /* libc++.dylib */; };
+		5274179619C3FD01003D61BF /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274179519C3FD01003D61BF /* Firebase.framework */; };
 		65DEEB3819C3D31300FA0D9D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3719C3D31300FA0D9D /* Foundation.framework */; };
 		65DEEB3A19C3D31300FA0D9D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3919C3D31300FA0D9D /* CoreGraphics.framework */; };
 		65DEEB3C19C3D31300FA0D9D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3B19C3D31300FA0D9D /* UIKit.framework */; };
@@ -43,6 +48,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5274178D19C3F2BD003D61BF /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		5274178F19C3F2FC003D61BF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		5274179119C3FA11003D61BF /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		5274179319C3FA19003D61BF /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		5274179519C3FD01003D61BF /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
 		65DEEB3419C3D31300FA0D9D /* Walk With Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Walk With Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65DEEB3719C3D31300FA0D9D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65DEEB3919C3D31300FA0D9D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -78,6 +88,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5274179419C3FA19003D61BF /* libc++.dylib in Frameworks */,
+				5274179219C3FA11003D61BF /* libicucore.dylib in Frameworks */,
+				5274179019C3F2FC003D61BF /* MobileCoreServices.framework in Frameworks */,
 				96C7983419C3E62200B975F1 /* Security.framework in Frameworks */,
 				96C7983519C3E62200B975F1 /* StoreKit.framework in Frameworks */,
 				96C7983619C3E62200B975F1 /* SystemConfiguration.framework in Frameworks */,
@@ -85,8 +98,10 @@
 				96C7982D19C3E60200B975F1 /* CoreLocation.framework in Frameworks */,
 				96C7982E19C3E60200B975F1 /* libz.dylib in Frameworks */,
 				65DEEB3A19C3D31300FA0D9D /* CoreGraphics.framework in Frameworks */,
+				5274178E19C3F2BD003D61BF /* Bolts.framework in Frameworks */,
 				96C7982A19C3E5EE00B975F1 /* CFNetwork.framework in Frameworks */,
 				96C7982819C3E5E800B975F1 /* AudioToolbox.framework in Frameworks */,
+				5274179619C3FD01003D61BF /* Firebase.framework in Frameworks */,
 				65DEEB3C19C3D31300FA0D9D /* UIKit.framework in Frameworks */,
 				96F016DA19C3E48700EAD431 /* Parse.framework in Frameworks */,
 				65DEEB3819C3D31300FA0D9D /* Foundation.framework in Frameworks */,
@@ -128,12 +143,17 @@
 		65DEEB3619C3D31300FA0D9D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5274179319C3FA19003D61BF /* libc++.dylib */,
+				5274179119C3FA11003D61BF /* libicucore.dylib */,
+				5274178F19C3F2FC003D61BF /* MobileCoreServices.framework */,
+				5274178D19C3F2BD003D61BF /* Bolts.framework */,
 				96C7983119C3E62200B975F1 /* Security.framework */,
 				96C7983219C3E62200B975F1 /* StoreKit.framework */,
 				96C7983319C3E62200B975F1 /* SystemConfiguration.framework */,
 				96C7982F19C3E61100B975F1 /* QuartzCore.framework */,
 				96C7982B19C3E60200B975F1 /* CoreLocation.framework */,
 				96C7982C19C3E60200B975F1 /* libz.dylib */,
+				5274179519C3FD01003D61BF /* Firebase.framework */,
 				96C7982919C3E5EE00B975F1 /* CFNetwork.framework */,
 				96C7982719C3E5E800B975F1 /* AudioToolbox.framework */,
 				96F016D919C3E48700EAD431 /* Parse.framework */,
@@ -236,6 +256,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Walk With Me LLC";
 				TargetAttributes = {
+					65DEEB3319C3D31300FA0D9D = {
+						DevelopmentTeam = 93VS8ZM66Y;
+					};
 					65DEEB5419C3D31300FA0D9D = {
 						TestTargetID = 65DEEB3319C3D31300FA0D9D;
 					};
@@ -413,6 +436,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -420,7 +445,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Walk With Me/Walk With Me-Prefix.pch";
 				INFOPLIST_FILE = "Walk With Me/Walk With Me-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -430,6 +457,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -437,7 +466,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Walk With Me/Walk With Me-Prefix.pch";
 				INFOPLIST_FILE = "Walk With Me/Walk With Me-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
