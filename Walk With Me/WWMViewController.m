@@ -10,6 +10,10 @@
 
 @interface WWMViewController ()
 
+@property (strong, nonatomic) Firebase* firebase;
+@property (strong, nonatomic) Firebase* usersbase;
+@property (strong, nonatomic) Firebase* userbase;
+
 @end
 
 @implementation WWMViewController
@@ -18,9 +22,10 @@
 {
     [super viewDidLoad];
     self.safetyMap.delegate = self;
-	// Do any additional setup after loading the view, typically from a nib.
-    //[self.safetyMap setShowsUserLocation:YES];
     
+    _firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
+    _usersbase = [_firebase childByAppendingPath: @"users"];
+    _userbase = [_firebase childByAppendingPath: @"10241"];
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
@@ -34,10 +39,14 @@
     return nil;
 }
 
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation      {
-    
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     // set the source to the current location
-    MKPlacemark *source = [[MKPlacemark alloc]initWithCoordinate:userLocation.coordinate addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"", nil] ];
+    MKPlacemark *source = [[MKPlacemark alloc]initWithCoordinate:userLocation.coordinate addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil] ];
+    
+    Firebase* coords = [_userbase childByAppendingPath: @"coords"];
+    [coords setValue:@[[[NSNumber alloc] initWithDouble:source.coordinate.latitude],
+                       [[NSNumber alloc] initWithDouble:source.coordinate.longitude]]];
+    
     
     MKMapItem *srcMapItem = [[MKMapItem alloc]initWithPlacemark:source];
     [srcMapItem setName:@""];
@@ -85,12 +94,29 @@
 
 - (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
 {
-    [mapView setUserTrackingMode:MKUserTrackingModeFollow];
-    MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
-    [destAnnotation setCoordinate:CLLocationCoordinate2DMake(39.9500, -75.1900)];
-    [destAnnotation setTitle:@"Destination"]; //You can set the subtitle too
-    [mapView addAnnotation:destAnnotation];
-
+    if (false) {
+        [mapView setUserTrackingMode:MKUserTrackingModeFollow];
+        MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
+        [destAnnotation setCoordinate:CLLocationCoordinate2DMake(39.9500, -75.1900)];
+        [destAnnotation setTitle:@"Destination"]; //You can set the subtitle too
+        [mapView addAnnotation:destAnnotation];
+    }
+    else {
+        Firebase* coords = [_userbase childByAppendingPath: @"coords"];
+        MKPointAnnotation *otherUser = [[MKPointAnnotation alloc]init];
+        [otherUser setCoordinate:CLLocationCoordinate2DMake(39.9500, -75.1900)];
+        [otherUser setTitle:@"Other dude"];
+        [mapView addAnnotation:otherUser];
+        [coords observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+            NSLog(@"%@", snapshot.value);
+            if (snapshot.value) {
+                [otherUser setCoordinate:CLLocationCoordinate2DMake([snapshot.value[0] doubleValue],
+                                                                    [snapshot.value[1] doubleValue])];
+            }
+        } withCancelBlock:^(NSError *error) {
+            NSLog(@"%@", error.description);
+        }];
+    }
 }
 - (void)didReceiveMemoryWarning
 {
