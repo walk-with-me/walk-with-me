@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="IIe-WS-vic">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="14A329r" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="IIe-WS-vic">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -17,50 +17,72 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bMq-TT-esU">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bMq-TT-esU">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hRp-a4-vgZ" customClass="WWMMenuBar">
-                                <rect key="frame" x="0.0" y="403" width="320" height="90"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hRp-a4-vgZ" customClass="WWMMenuBar">
+                                <rect key="frame" x="0.0" y="478" width="320" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMf-Dm-weB">
-                                        <rect key="frame" x="120" y="0.0" width="80" height="90"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMf-Dm-weB" customClass="WWMUIButton">
+                                        <rect key="frame" x="125" y="10" width="70" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="1" blue="0.0059685909790000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="🔔 Ping 🔔">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <color key="backgroundColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="0.92156862750000001" green="0.93725490199999995" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Ping"/>
                                         <connections>
                                             <segue destination="F3z-rR-DFh" kind="push" id="flL-jl-HgB"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDc-wC-zU9">
-                                        <rect key="frame" x="222" y="33" width="78" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDc-wC-zU9" customClass="WWMUIButton">
+                                        <rect key="frame" x="231" y="23" width="44" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="👬 Pals 🙏">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <color key="backgroundColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="aQo-PB-ucV"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.92156862745098034" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Pals"/>
                                         <connections>
                                             <action selector="FriendPickerButtonClicked:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="NyK-1a-sPa"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Gf-Mj-zxe">
-                                        <rect key="frame" x="33" y="33" width="58" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Gf-Mj-zxe" customClass="WWMUIButton">
+                                        <rect key="frame" x="45" y="23" width="44" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="👟 Walk">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <color key="backgroundColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="GGb-aZ-0L4"/>
+                                            <constraint firstAttribute="height" constant="44" id="sZK-aR-ltG"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.92156862750000001" green="0.93725490199999995" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Walk"/>
                                         <connections>
                                             <action selector="startWalk:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="KoE-yg-Yfk"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="qMf-Dm-weB" firstAttribute="centerY" secondItem="1Gf-Mj-zxe" secondAttribute="centerY" id="6fX-gx-0LB"/>
+                                    <constraint firstItem="qMf-Dm-weB" firstAttribute="leading" secondItem="1Gf-Mj-zxe" secondAttribute="trailing" constant="36" id="7wx-Hc-boB"/>
+                                    <constraint firstItem="wDc-wC-zU9" firstAttribute="bottom" secondItem="1Gf-Mj-zxe" secondAttribute="bottom" id="QTe-G4-Ft9"/>
+                                    <constraint firstItem="wDc-wC-zU9" firstAttribute="top" secondItem="1Gf-Mj-zxe" secondAttribute="top" id="SGj-EM-FUy"/>
+                                    <constraint firstItem="wDc-wC-zU9" firstAttribute="leading" secondItem="qMf-Dm-weB" secondAttribute="trailing" constant="36" id="dq9-lH-Y65"/>
+                                    <constraint firstItem="wDc-wC-zU9" firstAttribute="baseline" secondItem="1Gf-Mj-zxe" secondAttribute="baseline" id="tV7-uz-3Z9"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bMq-TT-esU" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Fdj-Cb-eQD"/>
+                            <constraint firstAttribute="trailing" secondItem="hRp-a4-vgZ" secondAttribute="trailing" id="Ryu-fD-Yp7"/>
+                            <constraint firstItem="hRp-a4-vgZ" firstAttribute="leading" secondItem="bMq-TT-esU" secondAttribute="leading" id="W79-Uh-Znk"/>
+                            <constraint firstItem="hRp-a4-vgZ" firstAttribute="bottom" secondItem="bMq-TT-esU" secondAttribute="bottom" id="X4G-tC-Z2e"/>
+                            <constraint firstItem="hRp-a4-vgZ" firstAttribute="trailing" secondItem="bMq-TT-esU" secondAttribute="trailing" id="hQf-Zm-D7A"/>
+                            <constraint firstAttribute="bottom" secondItem="bMq-TT-esU" secondAttribute="bottom" id="jSi-1Q-zRa"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="CIK-5a-Amj"/>
                     <connections>
