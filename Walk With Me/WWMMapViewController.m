@@ -43,6 +43,7 @@
 	[self.pingBounceButton setFrame:CGRectMake((frame_width-75)/2, frame_height-(75/2), 75, 75)];
 	self.pingBounceButton.layer.cornerRadius = 75/2;
 	[self.view addSubview:self.pingBounceButton];
+    self.pingBounceButton.transform = CGAffineTransformMakeScale(0.7,0.7);
 
     
     
@@ -55,7 +56,7 @@
 	[self.walkBounceButton setBackgroundColor:WWM_GREEN];
     [self.walkBounceButton setImage:[UIImage imageNamed:@"NavigateStartIcon"] forState:UIControlStateNormal];
     [self.walkBounceButton setImage:[UIImage imageNamed:@"NavigateStartIcon"] forState:UIControlStateHighlighted];
-	[self.walkBounceButton setFrame:CGRectMake(40, frame_height-(47/2), 47, 47)];
+	[self.walkBounceButton setFrame:CGRectMake(50, frame_height-(47/2), 47, 47)];
 	self.walkBounceButton.layer.cornerRadius = 47/2;
 	[self.view addSubview:self.walkBounceButton];
     
@@ -67,7 +68,7 @@
 	[self.palsBounceButton setBackgroundColor:WMM_ORANGE];
     [self.palsBounceButton setImage:[UIImage imageNamed:@"PalsIcon"] forState:UIControlStateNormal];
     [self.palsBounceButton setImage:[UIImage imageNamed:@"PalsIcon"] forState:UIControlStateHighlighted];
-	[self.palsBounceButton setFrame:CGRectMake(frame_width-40-47, frame_height-(47/2), 47, 47)];
+	[self.palsBounceButton setFrame:CGRectMake(frame_width-50-47, frame_height-(47/2), 47, 47)];
 	self.palsBounceButton.layer.cornerRadius = 47/2;
 	[self.view addSubview:self.palsBounceButton];
     
@@ -165,9 +166,43 @@
 - (IBAction)startWalk:(id)sender {
     if (!_walking) {
         
+        
         _walking = YES;
         walkButton.selected = YES;
+        
+        
+        //create label
+        NSString * eta = @"0:21";
+        
+        
+        UILabel *fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 40, 320, 100)];
+        fromLabel.text = eta;
+        fromLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:60];
+        fromLabel.textAlignment = NSTextAlignmentCenter;
 
+        
+        POPSpringAnimation *scaleUp =
+        [POPSpringAnimation animationWithPropertyNamed:kPOPViewScaleXY];
+        scaleUp.fromValue = [NSValue valueWithCGPoint:CGPointMake(0, 0)];
+        scaleUp.toValue = [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)];
+        scaleUp.springBounciness = 15;
+        scaleUp.springSpeed = 5.0f;
+        
+        POPSpringAnimation *pingScaleUp =
+        [POPSpringAnimation animationWithPropertyNamed:kPOPViewScaleXY];
+        pingScaleUp.toValue = [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)];
+        pingScaleUp.springBounciness = 15;
+        pingScaleUp.springSpeed = 5.0f;
+        [self.pingBounceButton pop_addAnimation:pingScaleUp forKey:@"scale"];
+
+        
+        
+        // Delay execution of my block for 10 seconds.
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self.bottomRect addSubview:fromLabel];
+            [fromLabel pop_addAnimation:scaleUp forKey:@"scale"];
+        });
+        
         // animate bottom up
         POPSpringAnimation *move = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
 		move.toValue = @(450);
@@ -175,6 +210,17 @@
 		move.springSpeed = 5.0f;
 		[self.bottomRect.layer pop_addAnimation:move forKey:@"position"];
         
+        POPSpringAnimation *moveLeft = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+		moveLeft.toValue = @(50);
+		moveLeft.springBounciness = 10;
+		moveLeft.springSpeed = 5.0f;
+		[self.walkBounceButton.layer pop_addAnimation:moveLeft forKey:@"position"];
+        
+        POPSpringAnimation *moveRight = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+		moveRight.toValue = @(self.view.frame.size.width-49);
+		moveRight.springBounciness = 10;
+		moveRight.springSpeed = 5.0f;
+		[self.palsBounceButton.layer pop_addAnimation:moveRight forKey:@"position"];
         
         // Show destination + route
         [self showRouteHome:self.safetyMap.userLocation.coordinate];
@@ -217,6 +263,33 @@
 {
     _walking = NO;
     walkButton.selected = NO;
+    
+    
+    POPSpringAnimation *move = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
+    move.toValue = @(self.view.frame.size.height+100);
+    move.springBounciness = 15;
+    move.springSpeed = 5.0f;
+    [self.bottomRect.layer pop_addAnimation:move forKey:@"position"];
+    
+    POPSpringAnimation *moveBackLeft = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+    moveBackLeft.toValue = @(60);
+    moveBackLeft.springBounciness = 10;
+    moveBackLeft.springSpeed = 5.0f;
+    [self.walkBounceButton.layer pop_addAnimation:moveBackLeft forKey:@"position"];
+    
+    POPSpringAnimation *moveBackRight = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+    moveBackRight.toValue = @(self.view.frame.size.width-15-47);
+    moveBackRight.springBounciness = 10;
+    moveBackRight.springSpeed = 5.0f;
+    [self.palsBounceButton.layer pop_addAnimation:moveBackRight forKey:@"position"];
+    
+    POPSpringAnimation *pingScaleBack =
+    [POPSpringAnimation animationWithPropertyNamed:kPOPViewScaleXY];
+    pingScaleBack.toValue = [NSValue valueWithCGPoint:CGPointMake(0.7, 0.7)];
+    pingScaleBack.springBounciness = 15;
+    pingScaleBack.springSpeed = 10.0f;
+    [self.pingBounceButton pop_addAnimation:pingScaleBack forKey:@"scale"];
+    
     
     // Send push notifications and deactivate watching friends
     for (NSArray* caretakerRef in PFUser.currentUser[@"caretakerRefs"]) {
