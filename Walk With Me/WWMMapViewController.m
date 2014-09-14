@@ -29,50 +29,51 @@
     float scan_size = frame_width/5;
     
     
-    //test new button
-   self.testButton = [WWMUIButton buttonWithType:UIButtonTypeCustom];
-//	[self.testButton addTarget:self action:@selector(didTapTestButton:) forControlEvents:UIControlEventTouchUpInside];
-	[self.testButton setBackgroundColor:WWM_BLUE];
-    [self.testButton setImage:[UIImage imageNamed:@"PingIcon"] forState:UIControlStateNormal];
-    [self.testButton setImage:[UIImage imageNamed:@"PingIcon"] forState:UIControlStateHighlighted];
-	[self.testButton setFrame:CGRectMake((frame_width-75)/2, 200, 75, 75)];
-	self.testButton.layer.cornerRadius = 75/2;
-	[self.view addSubview:self.testButton];
-
+    // bottom rect
+    self.bottomRect = [[UIView alloc] initWithFrame:CGRectMake(0, frame_height, frame_width, 340)];
+    self.bottomRect.backgroundColor = WWM_LIGHT;
+    [self.view addSubview:self.bottomRect];
+    
+    //ping button
+    self.pingBounceButton = [WWMUIButton buttonWithType:UIButtonTypeCustom];
+	[self.pingBounceButton addTarget:self action:@selector(pingButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+	[self.pingBounceButton setBackgroundColor:WWM_BLUE];
+    [self.pingBounceButton setImage:[UIImage imageNamed:@"PingIcon"] forState:UIControlStateNormal];
+    [self.pingBounceButton setImage:[UIImage imageNamed:@"PingIcon"] forState:UIControlStateHighlighted];
+	[self.pingBounceButton setFrame:CGRectMake((frame_width-75)/2, frame_height-(75/2), 75, 75)];
+	self.pingBounceButton.layer.cornerRadius = 75/2;
+	[self.view addSubview:self.pingBounceButton];
 
     
-    // Ping Button
-    pingButton = [[UIButton alloc] initWithFrame:CGRectMake((frame_width-75)/2, frame_height-(75/2), 75, 75)];
-    pingButton.layer.cornerRadius = 75/2;
-    pingButton.clipsToBounds = YES;
-    [pingButton setImage:[UIImage imageNamed:@"PingIcon"] forState:UIControlStateNormal];
-    [pingButton setBackgroundColor:WWM_BLUE];
-    [pingButton addTarget:self action:@selector(pingButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:pingButton];
     
-    // Walk Button
-    walkButton = [[UIButton alloc] initWithFrame:CGRectMake(40, frame_height-(47/2), 47, 47)];
-    walkButton.layer.cornerRadius = 47/2;
-    walkButton.clipsToBounds = YES;
-    [walkButton setImage:[UIImage imageNamed:@"NavigateStartIcon"] forState:UIControlStateNormal];
-    [walkButton setBackgroundColor:WWM_GREEN];
-//    [walkButton setTitle:@"Walk" forState:UIControlStateNormal];
-//    [walkButton setTitle:@"Stop" forState:UIControlStateSelected];
-//    [walkButton setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
-//    [walkButton setTitleEdgeInsets:UIEdgeInsetsMake(10, 0, 0, 0)];
-    [walkButton addTarget:self action:@selector(startWalk:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:walkButton];
     
-    // Pals Button
-    palsButton = [[UIButton alloc] initWithFrame:CGRectMake(frame_width-40-47, frame_height-(47/2), 47, 47)];
-    palsButton.layer.cornerRadius = 47/2;
-    palsButton.clipsToBounds = YES;
-    [palsButton setImage:[UIImage imageNamed:@"PalsIcon"] forState:UIControlStateNormal];
-    [palsButton setBackgroundColor:WMM_ORANGE];
-//    [palsButton setTitle:@"Pals" forState:UIControlStateNormal];
-    [palsButton addTarget:self action:@selector(FriendPickerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:palsButton];
+    
+    
+    
+    self.walkBounceButton = [WWMUIButton buttonWithType:UIButtonTypeCustom];
+	[self.walkBounceButton addTarget:self action:@selector(startWalk:) forControlEvents:UIControlEventTouchUpInside];
+	[self.walkBounceButton setBackgroundColor:WWM_GREEN];
+    [self.walkBounceButton setImage:[UIImage imageNamed:@"NavigateStartIcon"] forState:UIControlStateNormal];
+    [self.walkBounceButton setImage:[UIImage imageNamed:@"NavigateStartIcon"] forState:UIControlStateHighlighted];
+	[self.walkBounceButton setFrame:CGRectMake(40, frame_height-(47/2), 47, 47)];
+	self.walkBounceButton.layer.cornerRadius = 47/2;
+	[self.view addSubview:self.walkBounceButton];
+    
+    
 
+    // pals button
+    self.palsBounceButton = [WWMUIButton buttonWithType:UIButtonTypeCustom];
+	[self.palsBounceButton addTarget:self action:@selector(FriendPickerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+	[self.palsBounceButton setBackgroundColor:WMM_ORANGE];
+    [self.palsBounceButton setImage:[UIImage imageNamed:@"PalsIcon"] forState:UIControlStateNormal];
+    [self.palsBounceButton setImage:[UIImage imageNamed:@"PalsIcon"] forState:UIControlStateHighlighted];
+	[self.palsBounceButton setFrame:CGRectMake(frame_width-40-47, frame_height-(47/2), 47, 47)];
+	self.palsBounceButton.layer.cornerRadius = 47/2;
+	[self.view addSubview:self.palsBounceButton];
+    
+    
+    
+    
     PFUser* currentUser = [PFUser currentUser];
     if (!currentUser) { // No user logged in
         [self performSegueWithIdentifier:@"LoginPrompt" sender:self];
@@ -166,6 +167,14 @@
         
         _walking = YES;
         walkButton.selected = YES;
+
+        // animate bottom up
+        POPSpringAnimation *move = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
+		move.toValue = @(450);
+		move.springBounciness = 15;
+		move.springSpeed = 5.0f;
+		[self.bottomRect.layer pop_addAnimation:move forKey:@"position"];
+        
         
         // Show destination + route
         [self showRouteHome:self.safetyMap.userLocation.coordinate];

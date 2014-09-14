@@ -11,4 +11,6 @@
 
 @interface WWMUIButton : UIButton
 
+-(UIColor *)lighterColorForColor:(UIColor *)c;
+@property (strong) UIColor *currentBg;
 @end
