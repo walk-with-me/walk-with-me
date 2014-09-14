@@ -8,7 +8,9 @@
 
 #import "WalkWithMe.h"
 #import "WWMSafetyMapViewController.h"
+#import "WWMCaretakerViewController.h"
 #import "WWMUIButton.h"
+#import "WWMFace.h"
 #import <pop/POP.h>
 
 @interface WWMMapViewController : WWMSafetyMapViewController <MKMapViewDelegate, UIAlertViewDelegate>

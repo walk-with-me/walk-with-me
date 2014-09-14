@@ -14,6 +14,7 @@
 
 @property BOOL walking;
 @property (nonatomic, retain) NSMutableDictionary* faces;
+@property MKPointAnnotation* destAnnotation;
 
 @end
 
