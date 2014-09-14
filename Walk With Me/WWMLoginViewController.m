@@ -7,6 +7,7 @@
 //
 
 #import "WWMLoginViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface WWMLoginViewController ()
 
@@ -55,7 +56,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // Facebook login button, aligned vertically and horizontally.
+//    FBLoginView *loginView = [[FBLoginView alloc] init];
+//    loginView.frame = CGRectOffset(loginView.frame, (self.view.center.x - (loginView.frame.size.width / 2)),
+//                                                    (self.view.center.y - (loginView.frame.size.height / 2)));
+//    [self.view addSubview:loginView];
 }
 
 - (void)didReceiveMemoryWarning

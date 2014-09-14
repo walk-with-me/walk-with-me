@@ -24,3 +24,9 @@ DerivedData
 # http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
 #
 # Pods/
+Pods/BuildHeaders/DCPathButton/DCPathButton.h
+Pods/BuildHeaders/DCPathButton/DCPathCenterButton.h
+Pods/BuildHeaders/DCPathButton/DCPathItemButton.h
+Pods/Headers/DCPathButton/DCPathButton.h
+Pods/Headers/DCPathButton/DCPathCenterButton.h
+Pods/Headers/DCPathButton/DCPathItemButton.h

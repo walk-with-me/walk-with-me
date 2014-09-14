@@ -9,7 +9,7 @@
 #import "WalkWithMe.h"
 #import "WWMSafetyMapViewController.h"
 
-@interface WWMMapViewController : WWMSafetyMapViewController <MKMapViewDelegate>
+@interface WWMMapViewController : WWMSafetyMapViewController <MKMapViewDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *selectedFriendsView;
 @property (retain, nonatomic) FBFriendPickerViewController *friendPickerController;

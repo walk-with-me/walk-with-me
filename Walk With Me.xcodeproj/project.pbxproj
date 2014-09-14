@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5201E64519C507F000B712EF /* WWMStatusIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5201E64419C507F000B712EF /* WWMStatusIndicatorView.m */; };
 		52432A8519C4554C00F658BA /* WWMMenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 52432A8419C4554C00F658BA /* WWMMenuBar.m */; };
 		5268818319C446F700A0955D /* WWMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5268818219C446F700A0955D /* WWMLoginViewController.m */; };
 		5274179019C3F2FC003D61BF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5274178F19C3F2FC003D61BF /* MobileCoreServices.framework */; };
@@ -65,6 +66,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5201E64319C507F000B712EF /* WWMStatusIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMStatusIndicatorView.h; sourceTree = "<group>"; };
+		5201E64419C507F000B712EF /* WWMStatusIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMStatusIndicatorView.m; sourceTree = "<group>"; };
 		52432A8319C4554C00F658BA /* WWMMenuBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMMenuBar.h; sourceTree = "<group>"; };
 		52432A8419C4554C00F658BA /* WWMMenuBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWMMenuBar.m; sourceTree = "<group>"; };
 		5268818119C446F700A0955D /* WWMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWMLoginViewController.h; sourceTree = "<group>"; };
@@ -176,6 +179,8 @@
 		52432A8019C4549100F658BA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5201E64319C507F000B712EF /* WWMStatusIndicatorView.h */,
+				5201E64419C507F000B712EF /* WWMStatusIndicatorView.m */,
 				52432A8319C4554C00F658BA /* WWMMenuBar.h */,
 				52432A8419C4554C00F658BA /* WWMMenuBar.m */,
 				9635E64619C4EDC10049BFF7 /* WWMUIButton.h */,
@@ -440,6 +445,7 @@
 				9601963619C4C75F00CD6C14 /* AwesomeMenu.m in Sources */,
 				9635E64819C4EDC10049BFF7 /* WWMUIButton.m in Sources */,
 				52432A8519C4554C00F658BA /* WWMMenuBar.m in Sources */,
+				5201E64519C507F000B712EF /* WWMStatusIndicatorView.m in Sources */,
 				65DEEB4419C3D31300FA0D9D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

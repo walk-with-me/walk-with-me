@@ -31,6 +31,10 @@
                                              selector: @selector(enteredBackground:)
                                                  name: @"didEnterBackground"
                                                object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(enteredForeground:)
+                                                 name: @"didEnterForeground"
+                                               object: nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,12 +68,12 @@
 
 }
 
-- (void) enteredBackground
+- (void) enteredBackground:(NSNotification*) notification
 {
     [self notifyFirebaseNoLongerWatching];
 }
 
-- (void) enteredForeground
+- (void) enteredForeground:(NSNotification*) notification
 {
     [self notifyFirebaseWatching];
 }

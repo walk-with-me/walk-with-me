@@ -18,7 +18,7 @@
     // this dictates the style of the navigation route
     if ([overlay isKindOfClass:[MKPolyline class]]) {
         MKPolylineRenderer* aView = [[MKPolylineRenderer alloc] initWithPolyline:(MKPolyline*)overlay];
-        aView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
+        aView.strokeColor = [WWM_BLUE colorWithAlphaComponent:0.5];
         aView.lineWidth = 10;
         return aView;
     }
