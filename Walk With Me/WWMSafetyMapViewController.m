@@ -66,6 +66,9 @@
                 NSLog(@"Route Instruction : %@",[obj instructions]);
                 NSLog(@"Route Distance : %f",[obj distance]);
             }];
+            
+            self.remainingDistance = [obj distance];
+            self.remainingTime = [obj expectedTravelTime];
         }];
     }];
 

@@ -16,6 +16,8 @@
 
 @property (weak, nonatomic) MKPolyline *routeLine;
 @property (weak, nonatomic) IBOutlet MKMapView *safetyMap;
+@property (assign) CLLocationDistance remainingDistance;
+@property (assign) NSTimeInterval remainingTime;
 
 - (void)showRouteHome:(CLLocationCoordinate2D)userCoordinates;
 - (void)showRoute:(CLLocationCoordinate2D)fromCoordinates :(CLLocationCoordinate2D)toCoordinates;
