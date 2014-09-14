@@ -26,10 +26,83 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.safetyMap.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(enteredBackground:)
+                                                 name: @"didEnterBackground"
+                                               object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(enteredForeground:)
+                                                 name: @"didEnterForeground"
+                                               object: nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    [self.navigationController.navigationBar.topItem setTitle:[[NSString alloc] initWithFormat: @"%@'s Walk",self.walkerFirstName]];
+    self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
+    self.userbase = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@", self.walkerFBID]];
+    
+    Firebase* coords = [self.userbase childByAppendingPath: @"coords"];
+    MKPointAnnotation *otherUser = [[MKPointAnnotation alloc]init];
+    [otherUser setCoordinate:CLLocationCoordinate2DMake(39.9500, -75.1900)];
+    [otherUser setTitle:self.walkerName];
+    [self.safetyMap addAnnotation:otherUser];
+    [coords observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        if (snapshot != nil) {
+            NSLog(@"%@",snapshot);
+            CLLocationCoordinate2D other_coords = CLLocationCoordinate2DMake([snapshot.value[0] doubleValue], [snapshot.value[1] doubleValue]);
+            [otherUser setCoordinate:other_coords];
+            MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(other_coords, 500, 500);
+            MKCoordinateRegion adjustedRegion = [self.safetyMap regionThatFits:viewRegion];
+            [self.safetyMap setRegion:adjustedRegion animated:YES];
+            [self showRouteHome:other_coords];
+            
+        }
+    } withCancelBlock:^(NSError *error) {
+        NSLog(@"%@", error.description);
+    }];
+    
+    [self notifyFirebaseWatching];
+
+
+}
+
+- (void) enteredBackground:(NSNotification*) notification
+{
+    [self notifyFirebaseNoLongerWatching];
+}
+
+- (void) enteredForeground:(NSNotification*) notification
+{
+    [self notifyFirebaseWatching];
+}
+
+- (void) viewDidDisappear:(BOOL)animated
+{
+    [self notifyFirebaseNoLongerWatching];
+}
+
+- (void) notifyFirebaseNoLongerWatching
+{
+    Firebase* users_base = [self.firebase childByAppendingPath: @"users" ];
+    Firebase* walker_base = [users_base childByAppendingPath: self.walkerFBID];
+    Firebase* walker_caretakers = [walker_base childByAppendingPath:@"active_caretakers"];
+    Firebase* new_caretaker = [walker_caretakers childByAppendingPath:[PFUser currentUser][@"fbid"]];
+    
+    [new_caretaker setValue: nil];
+
+}
+
+- (void) notifyFirebaseWatching
+{
+    // add current user's fb id to the walker's active caretakers list
+    Firebase* users_base = [self.firebase childByAppendingPath: @"users" ];
+    Firebase* walker_base = [users_base childByAppendingPath: self.walkerFBID];
+    Firebase* walker_caretakers = [walker_base childByAppendingPath:@"active_caretakers"];
+    Firebase* new_caretaker = [walker_caretakers childByAppendingPath:[PFUser currentUser][@"fbid"]];
+
+    [new_caretaker setValue: [[NSNumber alloc] initWithInt:1]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,6 +110,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
+{
+    
+}
+
+
 
 /*
 #pragma mark - Navigation

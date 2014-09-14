@@ -24,6 +24,7 @@
      UIRemoteNotificationTypeSound];
     
     // Set global style options
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:WWM_WHITISH, NSForegroundColorAttributeName, WWM_FONT, NSFontAttributeName, nil]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UINavigationBar appearance] setTintColor:WWM_BLACKISH];
     [[UINavigationBar appearance] setBarTintColor:WWM_DARK];

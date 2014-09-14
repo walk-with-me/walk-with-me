@@ -7,9 +7,10 @@
 //
 
 #import "WalkWithMe.h"
+#import "WWMSafetyMapViewController.h"
 
 @interface WWMCaretakerViewController : WWMSafetyMapViewController <MKMapViewDelegate>
-
-@property (weak, nonatomic) IBOutlet MKMapView * safetyMap;
-
+@property (strong, nonatomic) NSString* walkerFBID;
+@property (strong, nonatomic) NSString* walkerName;
+@property (strong, nonatomic) NSString* walkerFirstName;
 @end
