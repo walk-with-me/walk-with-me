@@ -155,11 +155,11 @@
         
         // Show destination + route
         [self showRouteHome:self.safetyMap.userLocation.coordinate];
-        MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
-        [destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
+        self.destAnnotation = [[MKPointAnnotation alloc]init];
+        [self.destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
                                                                  [PFUser.currentUser[@"home"][1] doubleValue])];
-        [destAnnotation setTitle:@"Home"];
-        [self.safetyMap addAnnotation:destAnnotation];
+        [self.destAnnotation setTitle:@"Home"];
+        [self.safetyMap addAnnotation:self.destAnnotation];
         
         // Send push notifications and activate walking state for friends
         NSMutableArray* caretakerRefs = [[NSMutableArray alloc] init];
@@ -208,6 +208,8 @@
         Firebase* deletion = [dependents childByAppendingPath:caretakerRef[1]];
         [deletion removeValue];
     }
+    [self.safetyMap removeAnnotation:self.destAnnotation];
+    [self.safetyMap removeOverlay:(self.routeLine)];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
