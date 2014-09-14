@@ -195,13 +195,22 @@
     [self.friendPickerController loadData];
     [self.friendPickerController clearSelection];
     NSMutableArray *results = [[NSMutableArray alloc] init];
-    for (id<FBGraphUser> key in PFUser.currentUser[@"friend_profiles"]) {
+    [[PFUser currentUser] refresh];
+
+    for (id<FBGraphUser> user_data in PFUser.currentUser[@"friend_profiles"]) {
+        NSString *name = user_data[@"name"];
         id<FBGraphUser> user = (id<FBGraphUser>)[FBGraphObject graphObject];
-        user = key;
+        [user setObjectID:user_data[@"id"]];
+        [user setName:name]; // This is not mandatory
+        [user setFirst_name:user_data[@"first_name"]];
+        [user setLast_name:user_data[@"last_name"]];
         if (user) {
+            NSLog(@"adding user: %@", user.name);
             [results addObject:user];
         }
     }
+    
+    
     // And finally set the selection property
     self.friendPickerController.selection = results;
     [self presentViewController:self.friendPickerController animated:YES completion:nil];
