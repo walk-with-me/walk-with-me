@@ -7,11 +7,8 @@
 //
 
 #import "WalkWithMe.h"
-
+#import "WWMFace.h"
+@class WWMFace;
 @interface WWMStatusIndicatorView : UIView
-
-- (void)disable;
-- (void)enable;
-- (void)setRed:(BOOL)red;
-
+@property WWMFace* parentFace;
 @end

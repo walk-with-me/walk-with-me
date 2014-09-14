@@ -7,7 +7,7 @@
 //
 
 #import "WWMMapViewController.h"
-#import "WWMCaretakerViewController.h"
+
 
 @interface WWMMapViewController ()
 
@@ -79,7 +79,7 @@
     [dependents observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         if (!_faces[snapshot.value]) {
             _faces[snapshot.value] = [[WWMFace alloc] initWithUser:snapshot.value];
-            [_faces[snapshot.value] setIsWalking:YES];
+            [_faces[snapshot.value] ssetIsWalking:YES];
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDat:)];
             [_faces[snapshot.value] addGestureRecognizer:tap];
 
@@ -95,15 +95,15 @@
     
     Firebase* caretakers = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@/active_caretakers", currentUser[@"fbid"]]];
     [caretakers observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-        if (!_faces[snapshot.value]) {
-            _faces[snapshot.value] = [[WWMFace alloc] initWithUser:snapshot.value];
-            [_faces[snapshot.value] setIsVisiting:YES];
+        if (!_faces[snapshot.name]) {
+            _faces[snapshot.name] = [[WWMFace alloc] initWithUser:snapshot.name];
+            [_faces[snapshot.name] ssetIsVisiting:YES];
             [self replaceFaces];
         }
     }];
     [caretakers observeEventType:FEventTypeChildRemoved withBlock:^(FDataSnapshot *snapshot) {
-        [_faces[snapshot.value] removeFromSuperview];
-        [_faces removeObjectForKey:snapshot.value];
+        [_faces[snapshot.name] removeFromSuperview];
+        [_faces removeObjectForKey:snapshot.name];
         [self replaceFaces];
     }];
 
@@ -155,11 +155,11 @@
         
         // Show destination + route
         [self showRouteHome:self.safetyMap.userLocation.coordinate];
-        MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
-        [destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
+        self.destAnnotation = [[MKPointAnnotation alloc]init];
+        [self.destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
                                                                  [PFUser.currentUser[@"home"][1] doubleValue])];
-        [destAnnotation setTitle:@"Home"];
-        [self.safetyMap addAnnotation:destAnnotation];
+        [self.destAnnotation setTitle:@"Home"];
+        [self.safetyMap addAnnotation:self.destAnnotation];
         
         // Send push notifications and activate walking state for friends
         NSMutableArray* caretakerRefs = [[NSMutableArray alloc] init];
@@ -208,6 +208,8 @@
         Firebase* deletion = [dependents childByAppendingPath:caretakerRef[1]];
         [deletion removeValue];
     }
+    [self.safetyMap removeAnnotation:self.destAnnotation];
+    [self.safetyMap removeOverlay:(self.routeLine)];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
