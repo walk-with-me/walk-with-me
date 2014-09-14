@@ -69,10 +69,16 @@
             
             self.remainingDistance = [obj distance];
             self.remainingTime = [obj expectedTravelTime];
+            
+            [self showETA];
         }];
     }];
 
 }
+
+
+
+
 - (void)showRouteHome:(CLLocationCoordinate2D)userCoordinates {
     [self showRoute:userCoordinates:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
                                                                [PFUser.currentUser[@"home"][1] doubleValue])];

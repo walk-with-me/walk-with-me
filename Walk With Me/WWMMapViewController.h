@@ -12,6 +12,8 @@
 #import "WWMUIButton.h"
 #import "WWMFace.h"
 #import <pop/POP.h>
+#import "WWMCaretakerViewController.h"
+#import "WWMStatusIndicatorView.h"
 
 @interface WWMMapViewController : WWMSafetyMapViewController <MKMapViewDelegate, UIAlertViewDelegate>
 {
@@ -27,6 +29,7 @@
 @property (strong) WWMUIButton *walkBounceButton;
 @property (strong) WWMUIButton *palsBounceButton;
 @property (strong) UIView *bottomRect;
+@property MKPointAnnotation *destAnnotation;
 
 - (IBAction)FriendPickerButtonClicked:(id)sender;
 

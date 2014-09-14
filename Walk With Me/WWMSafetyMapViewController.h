@@ -21,5 +21,6 @@
 
 - (void)showRouteHome:(CLLocationCoordinate2D)userCoordinates;
 - (void)showRoute:(CLLocationCoordinate2D)fromCoordinates :(CLLocationCoordinate2D)toCoordinates;
+- (void)showETA;
 
 @end

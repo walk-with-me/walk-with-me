@@ -14,7 +14,7 @@
 
 @property BOOL walking;
 @property (nonatomic, retain) NSMutableDictionary* faces;
-@property MKPointAnnotation* destAnnotation;
+@property (nonatomic, retain) UILabel* fromLabel;
 
 @end
 
@@ -139,7 +139,7 @@
         Firebase* coords = [self.userbase childByAppendingPath: @"coords"];
         [coords setValue:@[[[NSNumber alloc] initWithDouble:userLocation.coordinate.latitude],
                            [[NSNumber alloc] initWithDouble:userLocation.coordinate.longitude]]];
-
+        
     }
 }
         
@@ -152,6 +152,10 @@
     }
 }
 
+- (void)showETA {
+    [self.fromLabel setText:[[NSString alloc] initWithFormat:@"0:%02.0lf", floor(self.remainingTime / 60)]];
+}
+
 - (IBAction)startWalk:(id)sender {
     if (!_walking) {
         
@@ -160,10 +164,12 @@
         
         // ETA Label
         NSString * eta = @"0:21";
-        UILabel *fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 40, 320, 100)];
-        fromLabel.text = eta;
-        fromLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:60];
-        fromLabel.textAlignment = NSTextAlignmentCenter;
+        
+        
+        self.fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 40, 320, 100)];
+        self.fromLabel.text = eta;
+        self.fromLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:60];
+        self.fromLabel.textAlignment = NSTextAlignmentCenter;
 
         
         POPSpringAnimation *scaleUp =
@@ -184,8 +190,8 @@
         
         // Delay execution of my block for 10 seconds.
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [self.bottomRect addSubview:fromLabel];
-            [fromLabel pop_addAnimation:scaleUp forKey:@"scale"];
+            [self.bottomRect addSubview:self.fromLabel];
+            [self.fromLabel pop_addAnimation:scaleUp forKey:@"scale"];
         });
         
         // animate bottom up
@@ -249,7 +255,6 @@
     _walking = NO;
     walkButton.selected = NO;
     
-    
     POPSpringAnimation *move = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
     move.toValue = @(self.view.frame.size.height+150);
     move.springBounciness = 15;
@@ -275,6 +280,7 @@
     pingScaleBack.springSpeed = 10.0f;
     [self.pingBounceButton pop_addAnimation:pingScaleBack forKey:@"scale"];
     
+    [self.fromLabel removeFromSuperview];
     
     // Send push notifications and deactivate watching friends
     for (NSArray* caretakerRef in PFUser.currentUser[@"caretakerRefs"]) {
