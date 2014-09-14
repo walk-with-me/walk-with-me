@@ -44,6 +44,8 @@
     [walkButton setBackgroundColor:WWM_GREEN];
 //    [walkButton setTitle:@"Walk" forState:UIControlStateNormal];
 //    [walkButton setTitle:@"Stop" forState:UIControlStateSelected];
+//    [walkButton setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
+//    [walkButton setTitleEdgeInsets:UIEdgeInsetsMake(10, 0, 0, 0)];
     [walkButton addTarget:self action:@selector(startWalk:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:walkButton];
     
@@ -274,6 +276,7 @@
     
     [self.friendPickerController loadData];
     [self.friendPickerController clearSelection];
+    [[UIBarButtonItem appearance] setTintColor:WWM_WHITISH];
     NSMutableArray *results = [[NSMutableArray alloc] init];
     [[PFUser currentUser] refresh];
 
