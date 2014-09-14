@@ -30,6 +30,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // "Call" button
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Call"
+                                                                              style:UIBarButtonItemStylePlain target:self action:@selector(CallButtonPressed:)];
+    
+    
     self.safetyMap.delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(enteredBackground:)
@@ -39,6 +45,7 @@
                                              selector: @selector(enteredForeground:)
                                                  name: @"didEnterForeground"
                                                object: nil];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
