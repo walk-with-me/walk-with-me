@@ -11,6 +11,7 @@
 @interface WWMStatusIndicatorView ()
 
 @property UIColor* indicatorColor;
+@property BOOL enabled;
 
 @end
 
@@ -22,8 +23,22 @@
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
     }
+    _enabled = YES;
     return self;
 }
+
+- (void)disable
+{
+    _enabled = NO;
+    [self setNeedsDisplay];
+}
+
+- (void)enable
+{
+    _enabled = YES;
+    [self setNeedsDisplay];
+}
+
 
 - (void)setColor:(UIColor*)color
 {
@@ -33,14 +48,16 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 1.0);
-    CGContextSetFillColor(context, CGColorGetComponents(_indicatorColor.CGColor));
-    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
-    CGRect rectangle = CGRectMake(0, 0, 12, 12);
-    CGContextClip(context);
-    CGContextFillEllipseInRect(context, rectangle);
-    CGContextStrokeEllipseInRect(context, rectangle);
+    if (_enabled) {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetLineWidth(context, 1.0);
+        CGContextSetFillColor(context, CGColorGetComponents(_indicatorColor.CGColor));
+        CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+        CGRect rectangle = CGRectMake(0, 0, 12, 12);
+        CGContextClip(context);
+        CGContextFillEllipseInRect(context, rectangle);
+        CGContextStrokeEllipseInRect(context, rectangle);
+    }
 }
 
 @end

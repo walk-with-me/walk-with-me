@@ -1,4 +1,4 @@
-//
+    //
 //  WWMMapViewController.m
 //  Walk With Me
 //
@@ -11,7 +11,7 @@
 @interface WWMMapViewController ()
 
 @property BOOL walking;
-@property NSMutableArray* faces;
+@property NSMutableDictionary* faces;
 
 @end
 
@@ -35,9 +35,28 @@
     self.safetyMap.delegate = self;
 
     self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
-    self.usersbase = [self.firebase childByAppendingPath: @"users"];
-    NSLog(@"%@", currentUser);
-    self.userbase = [self.firebase childByAppendingPath: currentUser[@"fbid"]];
+    Firebase* dependents = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@/dependents", currentUser[@"fbid"]]];
+    
+    [dependents observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        if (_faces[snapshot.value]) {
+            [_faces[snapshot.value] setIsWalking:YES];
+        }
+        else {
+            _faces[snapshot.value] = [[WWMFace alloc] initWithUser:snapshot.value];
+            [_faces[snapshot.value] setIsWalking:YES];
+            [self replaceFaces];
+        }
+    }];
+    
+    [dependents observeEventType:FEventTypeChildRemoved withBlock:^(FDataSnapshot *snapshot) {
+        if ([PFUser.currentUser[@"friends"] indexOfObject:snapshot.value] == NSNotFound) {
+            [_faces removeObjectForKey:snapshot.value];
+            [self replaceFaces];
+        }
+        else {
+            [_faces[snapshot.value] setIsWalking:NO];
+        }
+    }];
 }
 
 - (void)viewDidUnload {
@@ -51,13 +70,18 @@
     [[self navigationController] setNavigationBarHidden:YES animated:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    NSLog(@"££££££££££££££££££££££");
-}
-
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     if (_walking) {
         [self showRouteHome:userLocation];
+    }
+}
+        
+- (void)replaceFaces {
+    uint i = 0;
+    for (WWMFace* face in _faces) {
+        [self.view addSubview:face];
+        [face setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
+        i++;
     }
 }
 
@@ -90,22 +114,6 @@
             Firebase* insertion = [dependents childByAutoId];
             [insertion setValue:PFUser.currentUser[@"fbid"]];
             [caretakerRefs addObject:@[friend, insertion.name]];
-            
-            
-            NSString* faceURL = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=square&width=100&height=100", friend];
-            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:faceURL]]];
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            imageView.layer.cornerRadius = 25;
-            imageView.layer.masksToBounds = YES;
-            imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-            imageView.layer.borderWidth = 2.0;
-            [self.view addSubview:imageView];
-            [imageView setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
-            
-            WWMStatusIndicatorView* statusIndicator = [[WWMStatusIndicatorView alloc] init];
-            [self.view addSubview:statusIndicator];
-            [statusIndicator setFrame:CGRectMake(self.view.frame.size.width - 7 - (i+1)*60, 57, 20, 20)];
-            i++;
         }
         PFUser.currentUser[@"caretakerRefs"] = caretakerRefs;
         [PFUser.currentUser saveInBackground];

@@ -10,4 +10,8 @@
 
 @interface WWMStatusIndicatorView : UIView
 
+- (void)disable;
+- (void)enable;
+- (void)setColor:(UIColor*)color;
+
 @end
