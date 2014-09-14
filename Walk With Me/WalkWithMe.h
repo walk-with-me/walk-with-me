@@ -23,6 +23,7 @@
 
 #define WWM_BLUE [UIColor colorWithRed:0.24 green:0.61 blue:0.98 alpha:1]
 #define WWM_GREEN [UIColor colorWithRed:0.4 green:0.79 blue:0.15 alpha:1]
+#define WMM_ORANGE [UIColor colorWithRed:0.91 green:0.53 blue:0.13 alpha:1]
 #define WWM_LIGHT [UIColor colorWithRed:0.94 green:0.95 blue:0.96 alpha:1]
 #define WWM_DARK [UIColor colorWithRed:0.62 green:0.67 blue:0.73 alpha:1]
 #define WWM_BLACKISH [UIColor colorWithRed:0.29 green:0.29 blue:0.29 alpha:1]

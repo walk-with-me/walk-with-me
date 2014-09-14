@@ -10,6 +10,12 @@
 #import "WWMSafetyMapViewController.h"
 
 @interface WWMMapViewController : WWMSafetyMapViewController <MKMapViewDelegate, UIAlertViewDelegate>
+{
+    UIButton *pingButton;
+    UIButton *navigateButton;
+    UIButton *palsButton;
+    UIButton *walkButton;
+}
 
 @property (strong, nonatomic) IBOutlet UITextView *selectedFriendsView;
 @property (retain, nonatomic) FBFriendPickerViewController *friendPickerController;
