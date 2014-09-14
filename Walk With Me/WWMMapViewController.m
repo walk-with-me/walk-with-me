@@ -30,7 +30,7 @@
     
     
     // bottom rect
-    self.bottomRect = [[UIView alloc] initWithFrame:CGRectMake(0, frame_height, frame_width, 340)];
+    self.bottomRect = [[UIView alloc] initWithFrame:CGRectMake(0, frame_height+40, frame_width, 340)];
     self.bottomRect.backgroundColor = WWM_LIGHT;
     [self.view addSubview:self.bottomRect];
     
@@ -266,7 +266,7 @@
     
     
     POPSpringAnimation *move = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
-    move.toValue = @(self.view.frame.size.height+100);
+    move.toValue = @(self.view.frame.size.height+150);
     move.springBounciness = 15;
     move.springSpeed = 5.0f;
     [self.bottomRect.layer pop_addAnimation:move forKey:@"position"];
