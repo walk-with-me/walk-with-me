@@ -29,7 +29,6 @@
     float frame_height = self.view.frame.size.height-64; // 320
     float scan_size = frame_width/5;
     
-    
     // bottom rect
     self.bottomRect = [[UIView alloc] initWithFrame:CGRectMake(0, frame_height+40, frame_width, 340)];
     self.bottomRect.backgroundColor = WWM_LIGHT;
@@ -46,12 +45,6 @@
 	[self.view addSubview:self.pingBounceButton];
     self.pingBounceButton.transform = CGAffineTransformMakeScale(0.7,0.7);
 
-    
-    
-    
-    
-    
-    
     self.walkBounceButton = [WWMUIButton buttonWithType:UIButtonTypeCustom];
 	[self.walkBounceButton addTarget:self action:@selector(startWalk:) forControlEvents:UIControlEventTouchUpInside];
 	[self.walkBounceButton setBackgroundColor:WWM_GREEN];
@@ -60,8 +53,6 @@
 	[self.walkBounceButton setFrame:CGRectMake(50, frame_height-(47/2), 47, 47)];
 	self.walkBounceButton.layer.cornerRadius = 47/2;
 	[self.view addSubview:self.walkBounceButton];
-    
-    
 
     // pals button
     self.palsBounceButton = [WWMUIButton buttonWithType:UIButtonTypeCustom];
@@ -72,9 +63,6 @@
 	[self.palsBounceButton setFrame:CGRectMake(frame_width-50-47, frame_height-(47/2), 47, 47)];
 	self.palsBounceButton.layer.cornerRadius = 47/2;
 	[self.view addSubview:self.palsBounceButton];
-    
-    
-    
     
     PFUser* currentUser = [PFUser currentUser];
     if (!currentUser) { // No user logged in
@@ -167,15 +155,11 @@
 - (IBAction)startWalk:(id)sender {
     if (!_walking) {
         
-        
         _walking = YES;
         walkButton.selected = YES;
         
-        
-        //create label
+        // ETA Label
         NSString * eta = @"0:21";
-        
-        
         UILabel *fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 40, 320, 100)];
         fromLabel.text = eta;
         fromLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:60];
