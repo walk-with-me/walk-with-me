@@ -1,4 +1,4 @@
-    //
+//
 //  WWMMapViewController.m
 //  Walk With Me
 //
@@ -75,14 +75,34 @@
         if (!_faces[snapshot.value]) {
             _faces[snapshot.value] = [[WWMFace alloc] initWithUser:snapshot.value];
             [_faces[snapshot.value] setIsWalking:YES];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDat:)];
+            [_faces[snapshot.value] addGestureRecognizer:tap];
+
             [self replaceFaces];
         }
     }];
     
     [dependents observeEventType:FEventTypeChildRemoved withBlock:^(FDataSnapshot *snapshot) {
+        [_faces[snapshot.value] removeFromSuperview];
         [_faces removeObjectForKey:snapshot.value];
         [self replaceFaces];
     }];
+    
+    Firebase* caretakers = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@/active_caretakers", currentUser[@"fbid"]]];
+    [caretakers observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        if (!_faces[snapshot.value]) {
+            _faces[snapshot.value] = [[WWMFace alloc] initWithUser:snapshot.value];
+            [_faces[snapshot.value] setIsVisiting:YES];
+            [self replaceFaces];
+        }
+    }];
+    [caretakers observeEventType:FEventTypeChildRemoved withBlock:^(FDataSnapshot *snapshot) {
+        [_faces[snapshot.value] removeFromSuperview];
+        [_faces removeObjectForKey:snapshot.value];
+        [self replaceFaces];
+    }];
+
+
     self.userbase = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@",currentUser[@"fbid"]]];
 }
 
@@ -91,6 +111,12 @@
     self.friendPickerController = nil;
     
     [super viewDidUnload];
+}
+
+- (void)tapDat:(UITapGestureRecognizer *)gr {
+    UIView *theFaceThatGotTapped = (UIView *)gr.view;
+    [self performSegueWithIdentifier: @"BecomeCaretaker" sender: theFaceThatGotTapped];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -130,7 +156,6 @@
         [self.safetyMap addAnnotation:destAnnotation];
         
         // Send push notifications and activate walking state for friends
-        uint i = 0;
         NSMutableArray* caretakerRefs = [[NSMutableArray alloc] init];
 
         for (NSString* friend in PFUser.currentUser[@"friends"]) {
@@ -189,7 +214,7 @@
 {
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(WWMFace*)sender
 {
     if ([[segue identifier] isEqualToString:@"BecomeCaretaker"]) {
         
@@ -197,14 +222,11 @@
         WWMCaretakerViewController *vc = [segue destinationViewController];
         
         // Get button tag number (or do whatever you need to do here, based on your object
-        NSString* user_clicked_fbid = @"10204962536286151"; // todo unhardcode Derek's data
-        NSString* user_clicked_name = @"Derek Schultz";
-        NSString* user_clicked_first_name = @"Derek";
-        
+        NSLog(@"poo%@", sender);
         // Pass the information to your destination view
-        [vc setWalkerFBID:user_clicked_fbid];
-        [vc setWalkerName:user_clicked_name];
-        [vc setWalkerFirstName:user_clicked_first_name];
+        [vc setWalkerFBID:sender.userClickedFBID];
+        [vc setWalkerName:sender.userClickedName];
+        [vc setWalkerFirstName:sender.userClickedFirstName];
     }
 }
 

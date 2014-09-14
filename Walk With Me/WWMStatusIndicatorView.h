@@ -12,6 +12,6 @@
 
 - (void)disable;
 - (void)enable;
-- (void)setColor:(UIColor*)color;
+- (void)setRed:(BOOL)red;
 
 @end

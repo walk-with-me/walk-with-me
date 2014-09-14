@@ -10,8 +10,8 @@
 
 @interface WWMStatusIndicatorView ()
 
-@property (nonatomic, strong) UIColor* indicatorColor;
 @property BOOL enabled;
+@property BOOL red;
 
 @end
 
@@ -24,7 +24,7 @@
         [self setBackgroundColor:[UIColor clearColor]];
     }
     _enabled = YES;
-    _indicatorColor = [[UIColor alloc] init];
+    _red = YES;
     return self;
 }
 
@@ -41,9 +41,9 @@
 }
 
 
-- (void)setColor:(UIColor*)color
+- (void)setRed:(BOOL)red
 {
-    _indicatorColor = color;
+    _red = red;
     [self setNeedsDisplay];
 }
 
@@ -52,8 +52,12 @@
     if (_enabled) {
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSetLineWidth(context, 0.7);
-        NSLog(@"%@", _indicatorColor);
-        CGContextSetFillColor(context, CGColorGetComponents(WWM_GREEN.CGColor));
+        if (_red) {
+            CGContextSetFillColor(context, CGColorGetComponents(WWM_RED.CGColor));
+        }
+        else {
+            CGContextSetFillColor(context, CGColorGetComponents(WWM_GREEN.CGColor));
+        }
         CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
         CGContextClip(context);
         CGRect rectangle = CGRectMake(0, 0, 12, 12);
