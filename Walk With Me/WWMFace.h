@@ -7,7 +7,7 @@
 //
 
 #import "WalkWithMe.h"
-
+#import "WWMStatusIndicatorView.h"
 @interface WWMFace : UIView
 
 @property NSString* userClickedFBID;
@@ -15,8 +15,12 @@
 @property NSString* userClickedFirstName;
 @property NSArray* userClickedHome;
 
+@property BOOL isWalking;
+@property BOOL isVisiting;
+
+
 - (id)initWithUser:(NSString*)userID;
-- (void)setIsWalking:(BOOL)isWalking;
-- (void)setIsVisiting:(BOOL)isVisiting;
+- (void)ssetIsWalking:(BOOL)isWalking;
+- (void)ssetIsVisiting:(BOOL)isVisiting;
 
 @end

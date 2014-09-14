@@ -22,6 +22,10 @@
     }
     return self;
 }
+- (IBAction)CallButtonPressed:(id)sender {
+    NSString *phoneNumber = [@"telprompt://" stringByAppendingString:@"2679871157"];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+}
 
 - (void)viewDidLoad
 {
@@ -40,6 +44,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
     [self.navigationController.navigationBar.topItem setTitle:[[NSString alloc] initWithFormat: @"%@'s Walk",self.walkerFirstName]];
+    
     self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
     self.userbase = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@", self.walkerFBID]];
     

@@ -10,8 +10,6 @@
 
 @interface WWMFace ()
 
-@property BOOL isWalking;
-@property BOOL isVisiting;
 @property WWMStatusIndicatorView* indicator;
 
 @end
@@ -24,6 +22,10 @@
     if (self) {
         // Initialization code
     }
+    _isVisiting = NO;
+    _isWalking = NO;
+    _indicator = [[WWMStatusIndicatorView alloc] init];
+    [_indicator setParentFace:self];
     return self;
 }
 
@@ -59,34 +61,19 @@
     WWMStatusIndicatorView* statusIndicator = [[WWMStatusIndicatorView alloc] init];
     [self addSubview:statusIndicator];
     [statusIndicator setFrame:CGRectMake(3, 32, 17, 17)];
+    [statusIndicator setParentFace:self];
     
     return self;
 }
 
-- (void)setIsWalking:(BOOL)isWalking
+- (void)ssetIsWalking:(BOOL)isWalking
 {
     _isWalking = isWalking;
-    [self updateIndicator];
 }
 
-- (void)setIsVisiting:(BOOL)isVisiting
+- (void)ssetIsVisiting:(BOOL)isVisiting
 {
     _isVisiting = isVisiting;
-    [self updateIndicator];
-}
-
-- (void)updateIndicator {
-    if (_isWalking) {
-        [_indicator enable];
-        [_indicator setRed:YES];
-    }
-    else if (_isVisiting) {
-        [_indicator enable];
-        [_indicator setRed:NO];
-    }
-    else {
-        [_indicator disable];
-    }
 }
 
 /*
