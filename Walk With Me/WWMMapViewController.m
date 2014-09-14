@@ -28,7 +28,7 @@
     float scan_size = frame_width/5;
     
     // Ping Button
-    pingButton = [[UIButton alloc] initWithFrame:CGRectMake(scan_size*2, frame_height-scan_size+40, 75, 75)];
+    pingButton = [[UIButton alloc] initWithFrame:CGRectMake((frame_width-75)/2, frame_height-(75/2), 75, 75)];
     pingButton.layer.cornerRadius = 75/2;
     pingButton.clipsToBounds = YES;
     [pingButton setImage:[UIImage imageNamed:@"PingIcon"] forState:UIControlStateNormal];
@@ -37,7 +37,7 @@
     [self.view addSubview:pingButton];
     
     // Walk Button
-    walkButton = [[UIButton alloc] initWithFrame:CGRectMake(scan_size*1, frame_height-scan_size+40+(47/2), 47, 47)];
+    walkButton = [[UIButton alloc] initWithFrame:CGRectMake(40, frame_height-(47/2), 47, 47)];
     walkButton.layer.cornerRadius = 47/2;
     walkButton.clipsToBounds = YES;
     [walkButton setImage:[UIImage imageNamed:@"NavigateStartIcon"] forState:UIControlStateNormal];
@@ -46,7 +46,7 @@
     [self.view addSubview:walkButton];
     
     // Pals Button
-    palsButton = [[UIButton alloc] initWithFrame:CGRectMake(scan_size*4, frame_height-scan_size+40+(47/2), 47, 47)];
+    palsButton = [[UIButton alloc] initWithFrame:CGRectMake(frame_width-40-47, frame_height-(47/2), 47, 47)];
     palsButton.layer.cornerRadius = 47/2;
     palsButton.clipsToBounds = YES;
     [palsButton setImage:[UIImage imageNamed:@"PalsIcon"] forState:UIControlStateNormal];
