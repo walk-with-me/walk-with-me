@@ -16,8 +16,6 @@
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "WWMSafetyMapViewController.h"
-
 #define FIREBASE_URL @"https://walk.firebaseio.com/"
 
 #define WWM_BLUE [UIColor colorWithRed:0.24 green:0.61 blue:0.98 alpha:1]

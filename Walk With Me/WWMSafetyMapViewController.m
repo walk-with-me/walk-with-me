@@ -24,25 +24,15 @@
     }
     return nil;
 }
-
-- (void)showRouteHome:(MKUserLocation*)userLocation {
-    // set the source to the current location
-    NSLog(@"%f", userLocation.coordinate.latitude);
-    MKPlacemark *source = [[MKPlacemark alloc] initWithCoordinate:userLocation.coordinate
+- (void)showRoute:(CLLocationCoordinate2D)fromCoordinates :(CLLocationCoordinate2D)toCoordinates
+{
+    MKPlacemark *source = [[MKPlacemark alloc] initWithCoordinate:fromCoordinates
                                                 addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]];
-    
-    Firebase* coords = [_userbase childByAppendingPath: @"coords"];
-    [coords setValue:@[[[NSNumber alloc] initWithDouble:source.coordinate.latitude],
-                       [[NSNumber alloc] initWithDouble:source.coordinate.longitude]]];
-    
     
     MKMapItem *srcMapItem = [[MKMapItem alloc] initWithPlacemark:source];
     [srcMapItem setName:@""];
     
-    // set the destination to a hardcoded one
-    // TODO change this to the user's home
-    MKPlacemark *destination = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
-                                                                                                  [PFUser.currentUser[@"home"][1] doubleValue])
+    MKPlacemark *destination = [[MKPlacemark alloc] initWithCoordinate:toCoordinates
                                                      addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"", nil]];
     NSLog(@"%f", destination.coordinate.latitude);
     MKMapItem *distMapItem = [[MKMapItem alloc] initWithPlacemark:destination];
@@ -78,29 +68,11 @@
             }];
         }];
     }];
-}
 
-- (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
-{
-    if (true) {
-        [mapView setUserTrackingMode:MKUserTrackingModeFollow];
-    }
-    else {
-        Firebase* coords = [_userbase childByAppendingPath: @"coords"];
-        MKPointAnnotation *otherUser = [[MKPointAnnotation alloc]init];
-        [otherUser setCoordinate:CLLocationCoordinate2DMake(39.9500, -75.1900)];
-        [otherUser setTitle:@"Other dude"];
-        [mapView addAnnotation:otherUser];
-        [coords observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-            NSLog(@"%@", snapshot.value);
-            if (snapshot.value) {
-                [otherUser setCoordinate:CLLocationCoordinate2DMake([snapshot.value[0] doubleValue],
-                                                                    [snapshot.value[1] doubleValue])];
-            }
-        } withCancelBlock:^(NSError *error) {
-            NSLog(@"%@", error.description);
-        }];
-    }
+}
+- (void)showRouteHome:(CLLocationCoordinate2D)userCoordinates {
+    [self showRoute:userCoordinates:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
+                                                               [PFUser.currentUser[@"home"][1] doubleValue])];
 }
 
 @end
