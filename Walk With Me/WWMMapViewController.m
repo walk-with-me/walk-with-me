@@ -51,6 +51,10 @@
     [[self navigationController] setNavigationBarHidden:YES animated:animated];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    NSLog(@"££££££££££££££££££££££");
+}
+
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     if (_walking) {
         [self showRouteHome:userLocation];
@@ -58,34 +62,87 @@
 }
 
 - (IBAction)startWalk:(id)sender {
-    _walking = YES;
-    [self showRouteHome:self.safetyMap.userLocation];
-    MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
-    [destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
-                                                             [PFUser.currentUser[@"home"][1] doubleValue])];
-    [destAnnotation setTitle:@"Destination"]; //You can set the subtitle too
-    [self.safetyMap addAnnotation:destAnnotation];
+    if (!_walking) {
+        
+        _walking = YES;
+        
+        // Show destination + route
+        [self showRouteHome:self.safetyMap.userLocation];
+        MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
+        [destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
+                                                                 [PFUser.currentUser[@"home"][1] doubleValue])];
+        [destAnnotation setTitle:@"Home"];
+        [self.safetyMap addAnnotation:destAnnotation];
+        
+        // Send push notifications and activate walking state for friends
+        uint i = 0;
+        NSMutableArray* caretakerRefs = [[NSMutableArray alloc] init];
+
+        for (NSString* friend in PFUser.currentUser[@"friends"]) {
+            // Push notification
+            PFPush *push = [[PFPush alloc] init];
+            [push setChannel:[[NSString alloc] initWithFormat:@"user_%@", friend]];
+            [push setMessage:[[NSString alloc] initWithFormat:@"%@ is walking home.", PFUser.currentUser[@"name"]]];
+            [push sendPushInBackground];
+            
+            // Add state for caretakers
+            Firebase* dependents = [self.firebase childByAppendingPath:[[NSString alloc] initWithFormat:@"users/%@/dependents", friend]];
+            Firebase* insertion = [dependents childByAutoId];
+            [insertion setValue:PFUser.currentUser[@"fbid"]];
+            [caretakerRefs addObject:@[friend, insertion.name]];
+            
+            
+            NSString* faceURL = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=square&width=100&height=100", friend];
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:faceURL]]];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            imageView.layer.cornerRadius = 25;
+            imageView.layer.masksToBounds = YES;
+            imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            imageView.layer.borderWidth = 2.0;
+            [self.view addSubview:imageView];
+            [imageView setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
+            
+            WWMStatusIndicatorView* statusIndicator = [[WWMStatusIndicatorView alloc] init];
+            [self.view addSubview:statusIndicator];
+            [statusIndicator setFrame:CGRectMake(self.view.frame.size.width - 7 - (i+1)*60, 57, 20, 20)];
+            i++;
+        }
+        PFUser.currentUser[@"caretakerRefs"] = caretakerRefs;
+        [PFUser.currentUser saveInBackground];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"End Walk"
+                                                        message:@"Have you arrived safely at your destination?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Yes"
+                                              otherButtonTitles:@"Cancel", nil];
+        [alert show];
+    }
+}
+
+- (void)endWalk
+{
+    _walking = NO;
     
-    // SEND EM ALL DEM NOTIFICACIONES and put at top
-    uint i = 0;
-    for (NSString* friend in PFUser.currentUser[@"friends"]) {
+    // Send push notifications and deactivate watching friends
+    for (NSArray* caretakerRef in PFUser.currentUser[@"caretakerRefs"]) {
+        // Push notification
         PFPush *push = [[PFPush alloc] init];
-        [push setChannel:[[NSString alloc] initWithFormat:@"user_%@", friend]];
-        [push setMessage:[[NSString alloc] initWithFormat:@"%@ is walking home.", PFUser.currentUser[@"name"]]];
+        [push setChannel:[[NSString alloc] initWithFormat:@"user_%@", caretakerRef[0]]];
+        [push setMessage:[[NSString alloc] initWithFormat:@"%@ has arrived safely.", PFUser.currentUser[@"name"]]];
         [push sendPushInBackground];
         
-        UIImage* face = [[UIImage alloc] init];
-        
-        NSString* faceURL = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=square&width=100&height=100", friend];
-        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:faceURL]]];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        imageView.layer.cornerRadius = 25;
-        imageView.layer.masksToBounds = YES;
-        imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        imageView.layer.borderWidth = 2.0;
-        [self.view addSubview:imageView];
-        [imageView setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
-        i++;
+        // Turn off all caretakers watching state
+        Firebase* dependents = [self.firebase childByAppendingPath:[[NSString alloc] initWithFormat:@"users/%@/dependents", caretakerRef[0]]];
+        Firebase* deletion = [dependents childByAppendingPath:caretakerRef[1]];
+        [deletion removeValue];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self endWalk];
     }
 }
 
