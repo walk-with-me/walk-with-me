@@ -17,6 +17,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "WWMSafetyMapViewController.h"
+#import "WWMStatusIndicatorView.h"
 
 #define FIREBASE_URL @"https://walk.firebaseio.com/"
 
