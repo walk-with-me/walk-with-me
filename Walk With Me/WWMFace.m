@@ -37,12 +37,13 @@
     imageView.layer.cornerRadius = 25;
     imageView.layer.masksToBounds = YES;
     imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    imageView.layer.borderWidth = 2.0;
+    imageView.layer.borderWidth = 1.0;
     [self addSubview:imageView];
+    [imageView setFrame:CGRectMake(0, 0, 50, 50)];
     
     WWMStatusIndicatorView* statusIndicator = [[WWMStatusIndicatorView alloc] init];
     [self addSubview:statusIndicator];
-    [statusIndicator setFrame:CGRectMake(self.frame.size.width - 7, 57, 20, 20)];
+    [statusIndicator setFrame:CGRectMake(3, 32, 17, 17)];
     
     return self;
 }

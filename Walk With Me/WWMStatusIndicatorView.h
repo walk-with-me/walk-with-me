@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Walk With Me LLC. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WalkWithMe.h"
 
 @interface WWMStatusIndicatorView : UIView
 

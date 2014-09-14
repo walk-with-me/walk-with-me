@@ -12,7 +12,7 @@
 @interface WWMMapViewController ()
 
 @property BOOL walking;
-@property NSMutableDictionary* faces;
+@property (nonatomic, retain) NSMutableDictionary* faces;
 
 @end
 
@@ -40,10 +40,7 @@
     
     _faces = [[NSMutableDictionary alloc] init];
     [dependents observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-        if (_faces[snapshot.value]) {
-            [_faces[snapshot.value] setIsWalking:YES];
-        }
-        else {
+        if (!_faces[snapshot.value]) {
             _faces[snapshot.value] = [[WWMFace alloc] initWithUser:snapshot.value];
             [_faces[snapshot.value] setIsWalking:YES];
             [self replaceFaces];
@@ -51,13 +48,8 @@
     }];
     
     [dependents observeEventType:FEventTypeChildRemoved withBlock:^(FDataSnapshot *snapshot) {
-        if ([PFUser.currentUser[@"friends"] indexOfObject:snapshot.value] == NSNotFound) {
-            [_faces removeObjectForKey:snapshot.value];
-            [self replaceFaces];
-        }
-        else {
-            [_faces[snapshot.value] setIsWalking:NO];
-        }
+        [_faces removeObjectForKey:snapshot.value];
+        [self replaceFaces];
     }];
     self.userbase = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@",currentUser[@"fbid"]]];
 }
@@ -86,8 +78,8 @@
 - (void)replaceFaces {
     uint i = 0;
     for (WWMFace* face in _faces) {
-        [self.view addSubview:face];
-        [face setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
+        [self.view addSubview:_faces[face]];
+        [_faces[face] setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
         i++;
     }
 }
