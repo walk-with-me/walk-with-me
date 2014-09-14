@@ -186,7 +186,6 @@
         self.friendPickerController.title = @"My Pals";
         self.friendPickerController.delegate = self;
         self.friendPickerController.allowsMultipleSelection = YES;
-        self.friendPickerController.cancelButton = nil;
         // apparently even if we don't add the constraint that we only show friends with the app,
         // it is still restricted
         //self.friendPickerController.fieldsForRequest = [NSSet setWithObject:@"installed"];
