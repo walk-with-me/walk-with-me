@@ -41,8 +41,8 @@
 		65DEEB5919C3D31400FA0D9D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DEEB3B19C3D31300FA0D9D /* UIKit.framework */; };
 		65DEEB6119C3D31400FA0D9D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65DEEB5F19C3D31400FA0D9D /* InfoPlist.strings */; };
 		65DEEB6319C3D31400FA0D9D /* Walk_With_MeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DEEB6219C3D31400FA0D9D /* Walk_With_MeTests.m */; };
-		9601963619C4C75F00CD6C14 /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963319C4C75F00CD6C14 /* AwesomeMenu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		9601963719C4C75F00CD6C14 /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963519C4C75F00CD6C14 /* AwesomeMenuItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		9601963619C4C75F00CD6C14 /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963319C4C75F00CD6C14 /* AwesomeMenu.m */; };
+		9601963719C4C75F00CD6C14 /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601963519C4C75F00CD6C14 /* AwesomeMenuItem.m */; };
 		9635E64819C4EDC10049BFF7 /* WWMUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9635E64719C4EDC10049BFF7 /* WWMUIButton.m */; };
 		96C7982819C3E5E800B975F1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C7982719C3E5E800B975F1 /* AudioToolbox.framework */; };
 		96C7982A19C3E5EE00B975F1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C7982919C3E5EE00B975F1 /* CFNetwork.framework */; };
