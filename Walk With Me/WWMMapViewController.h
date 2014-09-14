@@ -8,6 +8,8 @@
 
 #import "WalkWithMe.h"
 #import "WWMSafetyMapViewController.h"
+#import "WWMCaretakerViewController.h"
+#import "WWMStatusIndicatorView.h"
 
 @interface WWMMapViewController : WWMSafetyMapViewController <MKMapViewDelegate, UIAlertViewDelegate>
 {
