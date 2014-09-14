@@ -9,6 +9,7 @@
 #import "WWMMapViewController.h"
 #import "WWMCaretakerViewController.h"
 
+
 @interface WWMMapViewController ()
 
 @property BOOL walking;
@@ -26,6 +27,19 @@
     float frame_width = self.view.frame.size.width;      // 568
     float frame_height = self.view.frame.size.height-64; // 320
     float scan_size = frame_width/5;
+    
+    
+    //test new button
+   self.testButton = [WWMUIButton buttonWithType:UIButtonTypeCustom];
+//	[self.testButton addTarget:self action:@selector(didTapTestButton:) forControlEvents:UIControlEventTouchUpInside];
+	[self.testButton setBackgroundColor:WWM_BLUE];
+    [self.testButton setImage:[UIImage imageNamed:@"PingIcon"] forState:UIControlStateNormal];
+    [self.testButton setImage:[UIImage imageNamed:@"PingIcon"] forState:UIControlStateHighlighted];
+	[self.testButton setFrame:CGRectMake((frame_width-75)/2, 200, 75, 75)];
+	self.testButton.layer.cornerRadius = 75/2;
+	[self.view addSubview:self.testButton];
+
+
     
     // Ping Button
     pingButton = [[UIButton alloc] initWithFrame:CGRectMake((frame_width-75)/2, frame_height-(75/2), 75, 75)];

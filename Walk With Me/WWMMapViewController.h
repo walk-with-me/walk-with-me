@@ -8,6 +8,7 @@
 
 #import "WalkWithMe.h"
 #import "WWMSafetyMapViewController.h"
+#import "WWMUIButton.h"
 
 @interface WWMMapViewController : WWMSafetyMapViewController <MKMapViewDelegate, UIAlertViewDelegate>
 {
@@ -19,6 +20,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextView *selectedFriendsView;
 @property (retain, nonatomic) FBFriendPickerViewController *friendPickerController;
+@property (strong) WWMUIButton *testButton;
 
 - (IBAction)FriendPickerButtonClicked:(id)sender;
 

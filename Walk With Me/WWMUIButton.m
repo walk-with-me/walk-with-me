@@ -7,34 +7,39 @@
 //
 
 #import "WWMUIButton.h"
+#import <pop/POP.h>
 
 @implementation WWMUIButton
 
-+ (UIButton *)ASButtonWithFrame:(CGRect)frame title:(NSString *)title
-{
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.frame = frame;
-    UIColor *defaultTintColor = WWM_BLACKISH;
-    button.layer.borderWidth = 1;
-    //button.layer.borderColor = defaultTintColor.CGColor;
-    button.layer.cornerRadius = 50;
-    button.layer.masksToBounds = YES;
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:defaultTintColor forState:UIControlStateNormal];
-    [button setTitleColor:WWM_WHITISH forState:UIControlStateHighlighted];
-//    UIImage *backGroundImage = [UIImage createSolidColorImageWithColor:defaultTintColor
-//                                                               andSize:button.bounds.size];
-//    [button setBackgroundImage:backGroundImage forState:UIControlStateHighlighted];
-    return button;
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	POPSpringAnimation *scale = [self pop_animationForKey:@"scale"];
+	
+	if (scale) {
+		scale.toValue = [NSValue valueWithCGPoint:CGPointMake(0.8, 0.8)];
+	} else {
+		scale = [POPSpringAnimation animationWithPropertyNamed:kPOPViewScaleXY];
+		scale.toValue = [NSValue valueWithCGPoint:CGPointMake(0.8, 0.8)];
+		scale.springBounciness = 10;
+		scale.springSpeed = 18.0f;
+		[self pop_addAnimation:scale forKey:@"scale"];
+	}
+	
+	[super touchesBegan:touches withEvent:event];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	POPSpringAnimation *scale = [self pop_animationForKey:@"scale"];
+	
+	if (scale) {
+		scale.toValue = [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)];
+	} else {
+		scale = [POPSpringAnimation animationWithPropertyNamed:kPOPViewScaleXY];
+		scale.toValue = [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)];
+		scale.springBounciness = 10;
+		scale.springSpeed = 18.0f;
+		[self pop_addAnimation:scale forKey:@"scale"];
+	}
+	
+	[super touchesEnded:touches withEvent:event];
 }
-*/
-
 @end
