@@ -42,6 +42,8 @@
     walkButton.clipsToBounds = YES;
     [walkButton setImage:[UIImage imageNamed:@"NavigateStartIcon"] forState:UIControlStateNormal];
     [walkButton setBackgroundColor:WWM_GREEN];
+//    [walkButton setTitle:@"Walk" forState:UIControlStateNormal];
+//    [walkButton setTitle:@"Stop" forState:UIControlStateSelected];
     [walkButton addTarget:self action:@selector(startWalk:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:walkButton];
     
@@ -51,6 +53,7 @@
     palsButton.clipsToBounds = YES;
     [palsButton setImage:[UIImage imageNamed:@"PalsIcon"] forState:UIControlStateNormal];
     [palsButton setBackgroundColor:WMM_ORANGE];
+//    [palsButton setTitle:@"Pals" forState:UIControlStateNormal];
     [palsButton addTarget:self action:@selector(FriendPickerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:palsButton];
 
@@ -128,6 +131,7 @@
     if (!_walking) {
         
         _walking = YES;
+        walkButton.selected = YES;
         
         // Show destination + route
         [self showRouteHome:self.safetyMap.userLocation.coordinate];
@@ -170,6 +174,7 @@
 - (void)endWalk
 {
     _walking = NO;
+    walkButton.selected = NO;
     
     // Send push notifications and deactivate watching friends
     for (NSArray* caretakerRef in PFUser.currentUser[@"caretakerRefs"]) {
