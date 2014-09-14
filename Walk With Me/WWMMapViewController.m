@@ -79,7 +79,7 @@
     [dependents observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         if (!_faces[snapshot.value]) {
             _faces[snapshot.value] = [[WWMFace alloc] initWithUser:snapshot.value];
-            [_faces[snapshot.value] setIsWalking:YES];
+            [_faces[snapshot.value] ssetIsWalking:YES];
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDat:)];
             [_faces[snapshot.value] addGestureRecognizer:tap];
 
@@ -95,15 +95,15 @@
     
     Firebase* caretakers = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@/active_caretakers", currentUser[@"fbid"]]];
     [caretakers observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-        if (!_faces[snapshot.value]) {
-            _faces[snapshot.value] = [[WWMFace alloc] initWithUser:snapshot.value];
-            [_faces[snapshot.value] setIsVisiting:YES];
+        if (!_faces[snapshot.name]) {
+            _faces[snapshot.name] = [[WWMFace alloc] initWithUser:snapshot.name];
+            [_faces[snapshot.name] ssetIsVisiting:YES];
             [self replaceFaces];
         }
     }];
     [caretakers observeEventType:FEventTypeChildRemoved withBlock:^(FDataSnapshot *snapshot) {
-        [_faces[snapshot.value] removeFromSuperview];
-        [_faces removeObjectForKey:snapshot.value];
+        [_faces[snapshot.name] removeFromSuperview];
+        [_faces removeObjectForKey:snapshot.name];
         [self replaceFaces];
     }];
 

@@ -16,7 +16,7 @@
 @property NSArray* userClickedHome;
 
 - (id)initWithUser:(NSString*)userID;
-- (void)setIsWalking:(BOOL)isWalking;
-- (void)setIsVisiting:(BOOL)isVisiting;
+- (void)ssetIsWalking:(BOOL)isWalking;
+- (void)ssetIsVisiting:(BOOL)isVisiting;
 
 @end

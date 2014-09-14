@@ -10,8 +10,8 @@
 
 @interface WWMStatusIndicatorView ()
 
-@property BOOL enabled;
-@property BOOL red;
+@property (nonatomic, strong) NSString* color;
+@property (nonatomic, assign) BOOL enabled;
 
 @end
 
@@ -23,8 +23,6 @@
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
     }
-    _enabled = YES;
-    _red = YES;
     return self;
 }
 
@@ -41,9 +39,9 @@
 }
 
 
-- (void)setRed:(BOOL)red
+- (void)ssetColor:(NSString*)color
 {
-    _red = red;
+    self.color = color;
     [self setNeedsDisplay];
 }
 
@@ -52,7 +50,7 @@
     if (_enabled) {
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSetLineWidth(context, 0.7);
-        if (_red) {
+        if ([self.color isEqualToString:@"red"]) {
             CGContextSetFillColor(context, CGColorGetComponents(WWM_RED.CGColor));
         }
         else {

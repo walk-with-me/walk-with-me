@@ -24,6 +24,9 @@
     if (self) {
         // Initialization code
     }
+    _isVisiting = NO;
+    _isWalking = NO;
+    _indicator = [[WWMStatusIndicatorView alloc] init];
     return self;
 }
 
@@ -63,13 +66,13 @@
     return self;
 }
 
-- (void)setIsWalking:(BOOL)isWalking
+- (void)ssetIsWalking:(BOOL)isWalking
 {
     _isWalking = isWalking;
     [self updateIndicator];
 }
 
-- (void)setIsVisiting:(BOOL)isVisiting
+- (void)ssetIsVisiting:(BOOL)isVisiting
 {
     _isVisiting = isVisiting;
     [self updateIndicator];
@@ -78,11 +81,11 @@
 - (void)updateIndicator {
     if (_isWalking) {
         [_indicator enable];
-        [_indicator setRed:YES];
+        [_indicator ssetColor:@"red"];
     }
     else if (_isVisiting) {
         [_indicator enable];
-        [_indicator setRed:NO];
+        [_indicator ssetColor:@"green"];
     }
     else {
         [_indicator disable];
