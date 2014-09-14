@@ -48,30 +48,41 @@
     self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
     self.userbase = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@", self.walkerFBID]];
     
-    Firebase* coords = [self.userbase childByAppendingPath: @"coords"];
-    MKPointAnnotation *otherUser = [[MKPointAnnotation alloc]init];
-    [otherUser setCoordinate:CLLocationCoordinate2DMake(39.9500, -75.1900)];
-    [otherUser setTitle:self.walkerName];
-    [self.safetyMap addAnnotation:otherUser];
-    [coords observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-        if (snapshot != nil) {
-            NSLog(@"%@",snapshot);
-            CLLocationCoordinate2D other_coords = CLLocationCoordinate2DMake([snapshot.value[0] doubleValue], [snapshot.value[1] doubleValue]);
-            [otherUser setCoordinate:other_coords];
-            MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(other_coords, 500, 500);
-            MKCoordinateRegion adjustedRegion = [self.safetyMap regionThatFits:viewRegion];
-            [self.safetyMap setRegion:adjustedRegion animated:YES];
-            [self showRouteHome:other_coords];
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query whereKey:@"fbid" equalTo:self.walkerFBID];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (!object) {
+            NSLog(@"The getFirstObject request failed.");
+        } else {
+            Firebase* coords = [self.userbase childByAppendingPath: @"coords"];
+            MKPointAnnotation *otherUser = [[MKPointAnnotation alloc]init];
+            [otherUser setCoordinate:CLLocationCoordinate2DMake([object[@"home"][0] doubleValue], [object[@"home"][1] doubleValue])];
+            [otherUser setTitle:self.walkerName];
+            [self.safetyMap addAnnotation:otherUser];
+            [coords observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+                if (snapshot != nil) {
+                    NSLog(@"%@",snapshot);
+                    CLLocationCoordinate2D other_coords = CLLocationCoordinate2DMake([snapshot.value[0] doubleValue], [snapshot.value[1] doubleValue]);
+                    CLLocationCoordinate2D end_coords = CLLocationCoordinate2DMake([object[@"home"][0] doubleValue], [object[@"home"][1] doubleValue]);
+                    [otherUser setCoordinate:other_coords];
+                    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(other_coords, 500, 500);
+                    MKCoordinateRegion adjustedRegion = [self.safetyMap regionThatFits:viewRegion];
+                    [self.safetyMap setRegion:adjustedRegion animated:YES];
+                    [self showRoute:other_coords :end_coords];
+                    
+                }
+            } withCancelBlock:^(NSError *error) {
+                NSLog(@"%@", error.description);
+            }];
             
-        }
-    } withCancelBlock:^(NSError *error) {
-        NSLog(@"%@", error.description);
-    }];
-    
-    [self notifyFirebaseWatching];
+            [self notifyFirebaseWatching];
 
+        }
+    }];
 
 }
+
+- (void)showETA {}
 
 - (void) enteredBackground:(NSNotification*) notification
 {
