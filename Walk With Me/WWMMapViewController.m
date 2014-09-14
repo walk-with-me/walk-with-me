@@ -189,6 +189,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)pingButtonClicked:(id)sender {
+    for (NSString* friend in PFUser.currentUser[@"friends"]) {
+        // Push notification
+        PFPush *push = [[PFPush alloc] init];
+        [push setChannel:[[NSString alloc] initWithFormat:@"user_%@", friend]];
+        [push setMessage:[[NSString alloc] initWithFormat:@"Ping from %@.  Call?", PFUser.currentUser[@"name"]]];
+        [push sendPushInBackground];
+    }
+
+}
 
 - (void)FriendPickerButtonClicked:(id)sender {
     
