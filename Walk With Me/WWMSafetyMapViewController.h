@@ -17,6 +17,7 @@
 @property (weak, nonatomic) MKPolyline *routeLine;
 @property (weak, nonatomic) IBOutlet MKMapView *safetyMap;
 
-- (void)showRouteHome:(MKUserLocation*)userLocation;
+- (void)showRouteHome:(CLLocationCoordinate2D)userCoordinates;
+- (void)showRoute:(CLLocationCoordinate2D)fromCoordinates :(CLLocationCoordinate2D)toCoordinates;
 
 @end

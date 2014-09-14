@@ -7,6 +7,7 @@
 //
 
 #import "WWMMapViewController.h"
+#import "WWMCaretakerViewController.h"
 
 @interface WWMMapViewController ()
 
@@ -35,9 +36,7 @@
     self.safetyMap.delegate = self;
 
     self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_URL];
-    self.usersbase = [self.firebase childByAppendingPath: @"users"];
-    NSLog(@"%@", currentUser);
-    self.userbase = [self.firebase childByAppendingPath: currentUser[@"fbid"]];
+    self.userbase = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@",currentUser[@"fbid"]]];
 }
 
 - (void)viewDidUnload {
@@ -57,7 +56,11 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     if (_walking) {
-        [self showRouteHome:userLocation];
+        [self showRouteHome:userLocation.coordinate];
+        Firebase* coords = [self.userbase childByAppendingPath: @"coords"];
+        [coords setValue:@[[[NSNumber alloc] initWithDouble:userLocation.coordinate.latitude],
+                           [[NSNumber alloc] initWithDouble:userLocation.coordinate.longitude]]];
+
     }
 }
 
@@ -67,7 +70,7 @@
         _walking = YES;
         
         // Show destination + route
-        [self showRouteHome:self.safetyMap.userLocation];
+        [self showRouteHome:self.safetyMap.userLocation.coordinate];
         MKPointAnnotation *destAnnotation = [[MKPointAnnotation alloc]init];
         [destAnnotation setCoordinate:CLLocationCoordinate2DMake([PFUser.currentUser[@"home"][0] doubleValue],
                                                                  [PFUser.currentUser[@"home"][1] doubleValue])];
@@ -150,10 +153,39 @@
 {
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"BecomeCaretaker"]) {
+        
+        // Get destination view
+        WWMCaretakerViewController *vc = [segue destinationViewController];
+        
+        // Get button tag number (or do whatever you need to do here, based on your object
+        NSString* user_clicked_fbid = @"10204962536286151"; // todo unhardcode Derek's data
+        NSString* user_clicked_name = @"Derek Schultz";
+        NSString* user_clicked_first_name = @"Derek";
+        
+        // Pass the information to your destination view
+        [vc setWalkerFBID:user_clicked_fbid];
+        [vc setWalkerName:user_clicked_name];
+        [vc setWalkerFirstName:user_clicked_first_name];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)pingButtonClicked:(id)sender {
+    for (NSString* friend in PFUser.currentUser[@"friends"]) {
+        // Push notification
+        PFPush *push = [[PFPush alloc] init];
+        [push setChannel:[[NSString alloc] initWithFormat:@"user_%@", friend]];
+        [push setMessage:[[NSString alloc] initWithFormat:@"Ping from %@.  Call?", PFUser.currentUser[@"name"]]];
+        [push sendPushInBackground];
+    }
+
 }
 
 - (void)FriendPickerButtonClicked:(id)sender {
@@ -241,6 +273,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
     return YES;
+}
+
+- (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
+{
+    [mapView setUserTrackingMode:MKUserTrackingModeFollow];
 }
 
 @end
