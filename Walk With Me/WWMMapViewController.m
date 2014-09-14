@@ -14,7 +14,9 @@
 
 @property BOOL walking;
 @property (nonatomic, retain) NSMutableDictionary* faces;
+@property (nonatomic, retain) UILabel* homeIn;
 @property (nonatomic, retain) UILabel* fromLabel;
+@property BOOL doneAni;
 
 @end
 
@@ -81,6 +83,7 @@
     Firebase* dependents = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@/dependents", currentUser[@"fbid"]]];
     
     _faces = [[NSMutableDictionary alloc] init];
+    _doneAni = YES;
     [dependents observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         if (!_faces[snapshot.value]) {
             _faces[snapshot.value] = [[WWMFace alloc] initWithUser:snapshot.value];
@@ -88,14 +91,15 @@
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDat:)];
             [_faces[snapshot.value] addGestureRecognizer:tap];
 
-            [self replaceFaces];
+            [self replaceFaces:_doneAni];
+            _doneAni = NO;
         }
     }];
     
     [dependents observeEventType:FEventTypeChildRemoved withBlock:^(FDataSnapshot *snapshot) {
         [_faces[snapshot.value] removeFromSuperview];
         [_faces removeObjectForKey:snapshot.value];
-        [self replaceFaces];
+        [self replaceFaces:NO];
     }];
     
     Firebase* caretakers = [self.firebase childByAppendingPath: [[NSString alloc] initWithFormat:@"users/%@/active_caretakers", currentUser[@"fbid"]]];
@@ -103,13 +107,14 @@
         if (!_faces[snapshot.name]) {
             _faces[snapshot.name] = [[WWMFace alloc] initWithUser:snapshot.name];
             [_faces[snapshot.name] ssetIsVisiting:YES];
-            [self replaceFaces];
+            [self replaceFaces:_doneAni];
+            _doneAni = NO;
         }
     }];
     [caretakers observeEventType:FEventTypeChildRemoved withBlock:^(FDataSnapshot *snapshot) {
         [_faces[snapshot.name] removeFromSuperview];
         [_faces removeObjectForKey:snapshot.name];
-        [self replaceFaces];
+        [self replaceFaces:NO];
     }];
 
 
@@ -143,11 +148,33 @@
     }
 }
         
-- (void)replaceFaces {
+- (void)replaceFaces:(BOOL)animatedd {
     uint i = 0;
+    animatedd = NO;
     for (WWMFace* face in _faces) {
-        [self.view addSubview:_faces[face]];
-        [_faces[face] setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
+        if (animatedd) {
+            // Do the animations
+            POPSpringAnimation *scaleUp =
+            [POPSpringAnimation animationWithPropertyNamed:kPOPViewScaleXY];
+            scaleUp.fromValue = [NSValue valueWithCGPoint:CGPointMake(0, 0)];
+            scaleUp.toValue = [NSValue valueWithCGPoint:CGPointMake(1.0, 1.0)];
+            scaleUp.springBounciness = 15;
+            scaleUp.springSpeed = 5.0f;
+            
+            POPSpringAnimation *moveItLeft = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+            moveItLeft.toValue = @(self.view.frame.size.width + 20 - (i+1)*60);
+            moveItLeft.springBounciness = 10;
+            moveItLeft.springSpeed = 5.0f;
+            [_faces[face] setFrame:CGRectMake(self.view.frame.size.width + 20 - i*60, 25, 50, 50)];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * ((i+2) - [_faces.allKeys count]) * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [self.view addSubview:_faces[face]];
+                [_faces[face] pop_addAnimation:moveItLeft forKey:@"scale"];
+            });
+        }
+        else {
+            [_faces[face] setFrame:CGRectMake(self.view.frame.size.width - 10 - (i+1)*60, 25, 50, 50)];
+            [self.view addSubview:_faces[face]];
+        }
         i++;
     }
 }
@@ -163,8 +190,13 @@
         walkButton.selected = YES;
         
         // ETA Label
-        NSString * eta = @"0:21";
+        NSString * eta = @"";
         
+        [self.homeIn setText:[[NSString alloc] initWithFormat:@"Home in"]];
+        self.homeIn = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 320, 15)];
+        self.homeIn.font = [UIFont fontWithName:@"AvenirNext-Regular" size:20];
+        self.homeIn.textColor = WWM_GREEN;
+        self.homeIn.textAlignment = NSTextAlignmentCenter;
         
         self.fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 40, 320, 100)];
         self.fromLabel.text = eta;
@@ -192,6 +224,8 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             [self.bottomRect addSubview:self.fromLabel];
             [self.fromLabel pop_addAnimation:scaleUp forKey:@"scale"];
+            [self.bottomRect addSubview:self.homeIn];
+            [self.homeIn pop_addAnimation:scaleUp forKey:@"position"];
         });
         
         // animate bottom up

@@ -80,6 +80,8 @@
 
 }
 
+- (void) showETA {}
+
 - (void) enteredBackground:(NSNotification*) notification
 {
     [self notifyFirebaseNoLongerWatching];
