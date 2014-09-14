@@ -10,8 +10,8 @@
 
 @interface WWMStatusIndicatorView ()
 
-@property UIColor* indicatorColor;
 @property BOOL enabled;
+@property BOOL red;
 
 @end
 
@@ -24,6 +24,7 @@
         [self setBackgroundColor:[UIColor clearColor]];
     }
     _enabled = YES;
+    _red = YES;
     return self;
 }
 
@@ -40,9 +41,9 @@
 }
 
 
-- (void)setColor:(UIColor*)color
+- (void)setRed:(BOOL)red
 {
-    _indicatorColor = color;
+    _red = red;
     [self setNeedsDisplay];
 }
 
@@ -50,11 +51,16 @@
 {
     if (_enabled) {
         CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetLineWidth(context, 1.0);
-        CGContextSetFillColor(context, CGColorGetComponents(_indicatorColor.CGColor));
+        CGContextSetLineWidth(context, 0.7);
+        if (_red) {
+            CGContextSetFillColor(context, CGColorGetComponents(WWM_RED.CGColor));
+        }
+        else {
+            CGContextSetFillColor(context, CGColorGetComponents(WWM_GREEN.CGColor));
+        }
         CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
-        CGRect rectangle = CGRectMake(0, 0, 12, 12);
         CGContextClip(context);
+        CGRect rectangle = CGRectMake(0, 0, 12, 12);
         CGContextFillEllipseInRect(context, rectangle);
         CGContextStrokeEllipseInRect(context, rectangle);
     }

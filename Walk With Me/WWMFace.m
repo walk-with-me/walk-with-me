@@ -30,6 +30,21 @@
 - (id)initWithUser:(NSString*)userID
 {
     self = [super init];
+    
+    self.userClickedFBID = userID;
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query whereKey:@"fbid" equalTo:userID];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (!object) {
+            NSLog(@"The getFirstObject request failed.");
+        } else {
+            // The find succeeded.
+            self.userClickedFirstName = object[@"firstName"];
+            self.userClickedName = object[@"name"];
+            self.userClickedHome = object[@"home"];
+        }
+    }];
 
     NSString* faceURL = [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture?type=square&width=100&height=100", userID];
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:faceURL]]];
@@ -37,12 +52,13 @@
     imageView.layer.cornerRadius = 25;
     imageView.layer.masksToBounds = YES;
     imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    imageView.layer.borderWidth = 2.0;
+    imageView.layer.borderWidth = 1.0;
     [self addSubview:imageView];
+    [imageView setFrame:CGRectMake(0, 0, 50, 50)];
     
     WWMStatusIndicatorView* statusIndicator = [[WWMStatusIndicatorView alloc] init];
     [self addSubview:statusIndicator];
-    [statusIndicator setFrame:CGRectMake(self.frame.size.width - 7, 57, 20, 20)];
+    [statusIndicator setFrame:CGRectMake(3, 32, 17, 17)];
     
     return self;
 }
@@ -62,11 +78,11 @@
 - (void)updateIndicator {
     if (_isWalking) {
         [_indicator enable];
-        [_indicator setColor:WWM_RED];
+        [_indicator setRed:YES];
     }
     else if (_isVisiting) {
         [_indicator enable];
-        [_indicator setColor:WWM_GREEN];
+        [_indicator setRed:NO];
     }
     else {
         [_indicator disable];

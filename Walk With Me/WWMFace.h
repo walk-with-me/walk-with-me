@@ -10,6 +10,11 @@
 
 @interface WWMFace : UIView
 
+@property NSString* userClickedFBID;
+@property NSString* userClickedName;
+@property NSString* userClickedFirstName;
+@property NSArray* userClickedHome;
+
 - (id)initWithUser:(NSString*)userID;
 - (void)setIsWalking:(BOOL)isWalking;
 - (void)setIsVisiting:(BOOL)isVisiting;
