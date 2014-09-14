@@ -21,29 +21,18 @@
     [super viewDidLoad];
     
     // Setup the menu items and then the menu
-    UIImage *storyMenuItemImage = [UIImage imageNamed:@"bg-menuitem.png"];
-    UIImage *storyMenuItemImagePressed = [UIImage imageNamed:@"bg-menuitem-highlighted.png"];
-    UIImage *starImage = [UIImage imageNamed:@"icon-star.png"];
+    UIImage *storyMenuItemImage = [UIImage imageNamed:nil];
+    UIImage *storyMenuItemImagePressed = [UIImage imageNamed:nil];
+    UIImage *starImage = [UIImage imageNamed:nil];
     
     
     AwesomeMenuItem *starMenuItem1 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
                                                            highlightedImage:storyMenuItemImagePressed
                                                                ContentImage:starImage
                                                     highlightedContentImage:nil];
-    AwesomeMenuItem *starMenuItem2 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
-                                                           highlightedImage:storyMenuItemImagePressed
-                                                               ContentImage:starImage
-                                                    highlightedContentImage:nil];
-    
-    AwesomeMenuItem *starMenuItem3 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
-                                                           highlightedImage:storyMenuItemImagePressed
-                                                               ContentImage:starImage
-                                                    highlightedContentImage:nil];
-    
     NSArray *menuOptions = [NSArray arrayWithObjects:starMenuItem1, starMenuItem2, starMenuItem3, nil];
     
-    AwesomeMenu *menu = [[AwesomeMenu alloc] initWithFrame:self.view.frame
-                                                     menus:menuOptions];
+    AwesomeMenu *menu = [[AwesomeMenu alloc] initWithFrame:self.view.frame menus:menuOptions];
     
     // Lower-right Quadrant
     menu.menuWholeAngle = M_PI / 180 * 90;

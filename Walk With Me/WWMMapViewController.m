@@ -21,6 +21,38 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Get the size of things
+    float frame_width = self.view.frame.size.width;      // 568
+    float frame_height = self.view.frame.size.height-64; // 320
+    float scan_size = frame_width/5;
+    
+    // Ping Button
+    pingButton = [[UIButton alloc] initWithFrame:CGRectMake(scan_size*2, frame_height-scan_size+40, 75, 75)];
+    pingButton.layer.cornerRadius = 75/2;
+    pingButton.clipsToBounds = YES;
+    [pingButton setImage:[UIImage imageNamed:@"PingIcon"] forState:UIControlStateNormal];
+    [pingButton setBackgroundColor:WWM_BLUE];
+    [pingButton addTarget:self action:@selector(pingButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:pingButton];
+    
+    // Walk Button
+    walkButton = [[UIButton alloc] initWithFrame:CGRectMake(scan_size*1, frame_height-scan_size+40+(47/2), 47, 47)];
+    walkButton.layer.cornerRadius = 47/2;
+    walkButton.clipsToBounds = YES;
+    [walkButton setImage:[UIImage imageNamed:@"NavigateStartIcon"] forState:UIControlStateNormal];
+    [walkButton setBackgroundColor:WWM_GREEN];
+    [walkButton addTarget:self action:@selector(startWalk:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:walkButton];
+    
+    // Pals Button
+    palsButton = [[UIButton alloc] initWithFrame:CGRectMake(scan_size*4, frame_height-scan_size+40+(47/2), 47, 47)];
+    palsButton.layer.cornerRadius = 47/2;
+    palsButton.clipsToBounds = YES;
+    [palsButton setImage:[UIImage imageNamed:@"PalsIcon"] forState:UIControlStateNormal];
+    [palsButton setBackgroundColor:WMM_ORANGE];
+    [palsButton addTarget:self action:@selector(FriendPickerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:palsButton];
 
     PFUser* currentUser = [PFUser currentUser];
     if (!currentUser) { // No user logged in
@@ -222,7 +254,6 @@
         self.friendPickerController.title = @"My Pals";
         self.friendPickerController.delegate = self;
         self.friendPickerController.allowsMultipleSelection = YES;
-        self.friendPickerController.cancelButton = nil;
         // apparently even if we don't add the constraint that we only show friends with the app,
         // it is still restricted
         //self.friendPickerController.fieldsForRequest = [NSSet setWithObject:@"installed"];
